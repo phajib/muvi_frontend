@@ -1,3 +1,7 @@
+# MUVI
+Muvi is where you can find information about movies.
+It's a IMDB/TMDB clone.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
