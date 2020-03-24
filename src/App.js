@@ -1,38 +1,60 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { connect } from "react-redux"
+import { fetchingTopRated, checkUser } from './Modules/actions'
+
+import NavBar from './Components/NavBar/NavBar'
 import Home from './Components/Home/Home'
-import SearchMovie from './Components/Search/SearchMovie'
-import LoginPage from './Components/LoginSignup/LoginPage'
-import UserProfile from './Components/UserProfile/UserProfile'
-import Show from './Components/Show/Show'
 import About from './Components/About/About'
-import Swal from 'sweetalert2'
+
 import './App.css'
 
-class App extends React.Component {
-  state = {
-    allMovies: [],
-    popularMovies: [],
-    topratedMovies: [],
-    currentUser: [],
-    allComments: [],
-    myMovieList: []
+export class App extends React.Component {
+  componentDidMount() {
+    this.props.fetchLatest()
+    this.props.checkUser()
   }
 
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Route exact path="/" render={() => <Home allMovies={this.state.allMovies} popularMovies={this.state.popularMovies} topratedMovies={this.state.topratedMovies} currentUser={this.state.currentUser}
-            signOut={this.signOut} />} />
+      <div className="App">
+        <NavBar />
+        <Switch>
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+          {/* <Route exact path="/" render={() => <Home allMovies={this.state.allMovies} popularMovies={this.state.popularMovies} topRatedMovies={this.state.topRatedMovies} currentUser={this.state.currentUser} logOut={this.logOut} />} /> */}
+          <Route exact path="/home" component={Home} />
 
-          <Route exact path="/movies" render={() => <SearchMovie allMovies={this.state.allMovies} currentUser={this.state.currentUser} signOut={this.signOut} addToList={this.addToList} />} />
-
-          <Route exact path="/movies/:id" render={(props) => {
+          {/* <Route exact path="/movies" component={SearchContainer} /> */}
+          <Route exact path="/movies" render={() => <SearchMovie allMovies={this.state.allMovies} currentUser={this.state.currentUser} logOut={this.logOut} addToList={this.addToList} />} />
+          
+          <Route exact path="/movie/:id" render={(props) => {
+            let movieId = props.match.params.id 
+             return  <Show movieID={movieId}/> 
+          }}/>
+          {/* <Route exact path="/movies/:id" render={(props) => {
             let id = props.match.params.id
             return <Show movieId={id} newCommnetAdded={this.newCommnetAdded} allComments={this.state.allComments} currentUser={this.state.currentUser}
-              signOut={this.signOut} addToList={this.addToList} removeFromAllComments={this.removeFromAllComments}
-            />
+              logOut={this.logOut} addToList={this.addToList} removeFromAllComments={this.removeFromAllComments} />
+          }} /> */}
+
+          <Route exact path="/profile" component={() => {
+              return this.props.currentUser.length === 0 ? <Redirect to="/login"/> : <UserProfile /> 
+            }}/>
+          {/* <Route exact path="/profile" render={() => {
+            return this.state.currentUser.length === 0 ? <Redirect to="/login" /> :
+              <UserProfile currentUser={this.state.currentUser}
+                logOut={this.logOut} handleDeleteComment={this.handleDeleteComment} allComments={this.state.allComments} myMovieList={this.state.myMovieList} />
+          }} /> */}
+          
+          {/* Need to do UserProfile Edit */}
+          {/* <Route exact path="/user/edit" render={()} */}
+
+          <Route exact path="/profile" render={() => {
+            return this.state.currentUser.length === 0 ? <Redirect to="/login" /> :
+              <UserProfile currentUser={this.state.currentUser} />
+                // logOut={this.logOut} handleDeleteComment={this.handleDeleteComment} allComments={this.state.allComments} myMovieList={this.state.myMovieList} />
+
           }} />
 
           <Route exact path="/login" render={() => {
@@ -40,18 +62,26 @@ class App extends React.Component {
               signUp={this.signUp} /> : <Redirect to="/profile" />
           }} />
 
-          <Route exact path="/profile" render={() => {
-            return this.state.currentUser.length === 0 ? <Redirect to="/login" /> :
-              <UserProfile currentUser={this.state.currentUser}
-                signOut={this.signOut} handleDeleteComment={this.handleDeleteComment} allComments={this.state.allComments} myMovieList={this.state.myMovieList} />
-
-          }} />
-
           <Route exact path="/about" render={() => < About />} />
-        </div>
-      </Router>
+        </Switch>
+      </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchingTopRated: () => {dispatch(fetchingTopRated())},
+    checkUser: () => {dispatch(checkUser())}
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(App)
+);
