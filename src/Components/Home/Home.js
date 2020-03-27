@@ -1,28 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Header from '../Home/Home'
-import PosterContainer from '../Poster/PosterContainer'
-import LatestContainer from '../Home/LatestContainer'
-import PopularContainer from '../Home/PopularContainer'
+import React, { Component } from 'react';
 
-class Home extends React.Component {
-    render () {
+// import { connect } from 'react-redux';
+
+// import SearchForm from './SearchForm';
+// import MoviesContainer from '../Movie/MoviesContainer';
+// import Spinner from '../layout/Spinner';
+
+export class Home extends Component {
+    render() {
+        // const { loading } = this.props;
         return (
-            <div>
-                {/* Check to see if user is logged in to adjust NavBar options. Logged in: Profile */}
-                <div className="homeButtons">
-                    <Link className="item ui inverted yellow button" to="/movies" />Movies
-                    {!Array.isArray(this.props.currentUser) ? <Link className="item ui inverted yellow button" to="/profile">Profile</Link> : <Link className="item ui inverted yellow button" to="/login">Login</Link>}
-                    <Link className="item ui inverted yellow button" to="/about">About</Link>
-                </div>
-                <Header />
-                {/* Add Carousel of latest movies maybe later and replace PosterContainer */}
-                <PosterContainer allMovies={this.props.allMovies} />
-                <LatestContainer latestMovies={this.props.latestMovies} />
-                <PopularContainer popularMovies={this.props.popularMovies} />
+            <div className="container">
+                MUVI
+                {/* <SearchForm />
+                {loading ? <Spinner /> : <MoviesContainer />} */}
             </div>
-        )
+        );
     }
 }
 
+// const mapStateToProps = state => ({
+//     loading: state.movies.loading
+// });
+
+// export default connect(mapStateToProps)(Home);
 export default Home
