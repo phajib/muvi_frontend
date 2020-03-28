@@ -5,14 +5,29 @@ import { connect } from 'react-redux';
 import SearchForm from './SearchForm';
 import MoviesContainer from './MoviesContainer';
 import Spinner from '../layout/Spinner';
+import PopularMovies from './PopularMovies'
+import TopRatedMovies from './TopRatedMovies';
 
 export class Landing extends Component {
   render() {
-    const { loading } = this.props;
+    const { loading } = this.props; //take out loading from props
     return (
       <div className="container">
         <SearchForm />
         {loading ? <Spinner /> : <MoviesContainer />}
+
+        <div className="container">
+          <div className="row">
+            <div className="col-sm text-sm-center text-success">
+              <PopularMovies />
+            </div>
+            <div className="col-sm text-sm-center text-success">
+              <TopRatedMovies />
+            </div>
+
+          </div>
+        </div>
+        
       </div>
     );
   }
