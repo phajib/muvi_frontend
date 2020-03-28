@@ -1,64 +1,61 @@
-import {
-  SEARCH_MOVIE,
-  FETCH_MOVIES,
-  FETCH_MOVIE,
-  LOADING,
-  FETCH_UPCOMING,
-  FETCH_TOP_RATED,
-  FETCH_POPULAR,
-  FETCH_LATEST
-} from '../actions/types';
-
 const initialState = {
   text: '',
+  movie: [],
   movies: [],
   loading: false,
-  movie: []
+  upcomingMovies: [],
+  topRatedMovies: [],
+  popularMovies: [],
+  latestMovies: []
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SEARCH_MOVIE:
+    case 'SEARCH_MOVIE':
       return {
         ...state,
         text: action.payload,
         loading: false
       };
-    case FETCH_MOVIES:
+    case 'FETCH_MOVIES':
       return {
         ...state,
         movies: action.payload,
         loading: false
       };
-    case FETCH_MOVIE:
+    case 'FETCH_MOVIE':
       return {
         ...state,
         movie: action.payload,
         loading: false
       };
-    case LOADING:
+    case 'LOADING':
       return {
         ...state,
         loading: true
       };
-    case FETCH_UPCOMING:
+    case 'FETCH_UPCOMING':
       return {
         ...state,
+        upcomingMovies: action.payload,
         loading: false
       };
-    case FETCH_TOP_RATED:
+    case 'FETCH_TOP_RATED':
       return {
         ...state,
+        topRatedMovies: action.payload,
         loading: false
       };
-    case FETCH_POPULAR:
+    case 'FETCH_POPULAR':
       return {
         ...state,
+        popularMovies: action.payload,
         loading: false
       };
-    case FETCH_LATEST:
+    case 'FETCH_LATEST':
       return {
         ...state,
+        latestMovies: action.payload,
         loading: false
       };
     default:

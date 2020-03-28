@@ -1,26 +1,35 @@
-import {
-    // FETCH_COMMENTS,
-    // FETCH_MOVIE_COMMENTS,
-    // NEW_COMMENT,
-    // DELETE_COMMENT,
-    LOADING
-} from '../actions/types';
-
 const initialState = {
-    // text: '',
-    // movies: [],
-    // loading: false,
-    // movie: []
+    isLogin: false,
+    user: {
+        username: '',
+        password: '',
+        about: '',
+        profile_picture: ''
+    }
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case LOADING:
-            return {
-                ...state,
-                loading: true
-            };
+        case 'CREATE_USER': 
+            return action.payload
+            // return {
+            //     ...state.user,
+            //     isLogin: true,
+            //     user: {
+            //         username: action.username,
+            //         password: action.password,
+            //         about: action.about,
+            //         profile_picture: action.profile_picture
+            //     },
+        // };
+        case 'CREATE_USER_ERROR': 
+            return {isLogin: false}
+        case 'SIGN_OUT':
+            return action.payload
+        case "UPDATE_USER":
+            return action.payload
         default:
             return state;
     }
 }
+
