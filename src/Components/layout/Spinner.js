@@ -1,10 +1,11 @@
 import React from 'react'
+import spinner from './spinner.gif'
 
 function Spinner() {
   return (
     <div>
       <img
-        src="https://cdn.dribbble.com/users/2896146/screenshots/6350705/______.gif?vid=1"
+        src={spinner}
         style={{ width: '200px', margin: 'auto', display: 'block' }}
         alt="Loading..."
       />
