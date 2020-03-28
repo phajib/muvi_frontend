@@ -9,32 +9,33 @@ import {
 } from '../../actions/movieActions';
 
 export class SearchForm extends Component {
+  // send text to state
   onChange = e => {
     this.props.searchMovie(e.target.value);
   };
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.fetchMovies(this.props.text);
+    this.props.fetchMovies(this.props.text); // use action as props
     this.props.setLoading();
   };
 
   render() {
     return (
-      <div className="jumbotron jumbotron-fluid mt-5 text-center">
+      <div className="jumbotron jumbotron-fluid mt-2 text-center">
         <div className="container">
-          <h1 className="display-4 mb-3">
-            <i className="fa fa-search" /> Search for a movie ,TV series ..
+          <h1 className="display-5 mb-5 animated bounceIn">
+            <i className="fa fa-search animated bounceIn" /> Search for a movie...
           </h1>
           <form id="searchForm" onSubmit={this.onSubmit}>
             <input
-              type="search"
-              className="form-control"
+              className="form-control my-2"
               name="searchText"
+              type="search"
               placeholder="Search Movies, TV Series ..."
               onChange={this.onChange}
             />
-            <button type="submit" className="btn btn-outline-success my-2 my-sm-0">
+            <button type="submit" className="btn btn-outline-success my-2 my-sm-0 animated jackInTheBox">
               Search
             </button>
           </form>
@@ -45,6 +46,7 @@ export class SearchForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  // pulled out text from the state
   text: state.movies.text
 });
 
