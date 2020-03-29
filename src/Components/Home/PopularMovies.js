@@ -1,21 +1,22 @@
-import React from "react";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-// import MovieCard from './MovieCard'
-// import {fetchPopular} from '../../actions/movieActions'
+import MovieCard from './MovieCard';
 
-class PopularMovies extends React.Component{
-    render(){
-        return (
-            <div className="featured-container animated bounceIn">
-                <div className="featured-header">
-                    <h1 className="featured-text is-size-1">Popular Movies</h1>
-                </div>
-                <div className="popular-movies text-center">
-                    {/* {this.props.fetchPopular.slice(0,3).map(movie => <MovieCard key={movie.id} movieObject={movie} />)} */}
-                </div>
-            </div>
-        )
-    }
+export class PopularMovies extends Component {
+  render() {
+    const { movies } = this.props;
+    
+    let content = '';
+    content = movies.Response === 'True' ? movies.slice(0, 3).map((movie, index) => 
+      (<MovieCard key={index} movie={movie} />)) : null;
+
+    return <div className="row">{content}</div>;
+  }
 }
 
-export default PopularMovies
+const mapStateToProps = state => ({
+  movies: state.movies.movies
+});
+
+export default connect(mapStateToProps)(PopularMovies);

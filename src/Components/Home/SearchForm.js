@@ -29,10 +29,10 @@ export class SearchForm extends Component {
           </h1>
           <form id="searchForm" onSubmit={this.onSubmit}>
             <input
-              className="form-control my-2"
+              className="form-control my-2 text-success"
               name="searchText"
               type="search"
-              placeholder="Search Movies, TV Series ..."
+              placeholder="Search Movies..."
               onChange={this.onChange}
             />
             <button type="submit" className="btn btn-outline-success my-2 my-sm-0 animated jackInTheBox">
