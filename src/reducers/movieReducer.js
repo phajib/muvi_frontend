@@ -6,7 +6,8 @@ const initialState = {
   upcomingMovies: [],
   topRatedMovies: [],
   popularMovies: [],
-  latestMovies: []
+  latestMovies: [],
+  userMovies: []
 };
 
 export default function (state = initialState, action) {
@@ -56,6 +57,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         latestMovies: action.payload,
+        loading: false
+      };
+    case 'USER_MOVIES':
+      return {
+        ...state,
+        userMovies: action.payload,
         loading: false
       };
     default:
