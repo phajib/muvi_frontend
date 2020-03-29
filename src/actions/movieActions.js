@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 
@@ -17,9 +18,7 @@ export const searchMovie = text => dispatch => {
 };
 
 export const fetchMovies = text => dispatch => {
-  axios
-    .get(`https://api.themoviedb.org/3/search/movie?api_key=2c7ac09213443b720c7abaa7b2c0ec29&query=${text}`)
-    // .get(`${HOST_URL}/search/${text}`)
+  axios.get(`${HOST_URL}/search/${text}`)
     .then(response =>
       dispatch({
         type: 'FETCH_MOVIES',
@@ -31,8 +30,8 @@ export const fetchMovies = text => dispatch => {
 
 export const fetchMovie = movie_id => dispatch => {
   axios
-    .get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
-    // .get(`${HOST_URL}/movie/${movie_id}`)
+    // .get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
+    .get(`${HOST_URL}/movie/${movie_id}`)
     .then(response =>
       dispatch({
         type: 'FETCH_MOVIE',
@@ -44,7 +43,7 @@ export const fetchMovie = movie_id => dispatch => {
 
 export const fetchUpcoming = dispatch => {
   axios
-  // .get(`https://api.themoviedb.org/3/movie/upcoming?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
+    // .get(`https://api.themoviedb.org/3/movie/upcoming?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
     .get(`${HOST_URL}/upcoming`)
     .then(response =>
       dispatch({
@@ -55,40 +54,59 @@ export const fetchUpcoming = dispatch => {
     .catch(err => console.log(err));
 };
 
-export const fetchTopRated = dispatch => {
-  axios
-  .get(`https://api.themoviedb.org/3/movie/top_rated?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
-    // .get(`${HOST_URL}/top_rated`)
-    .then(response =>
-      dispatch({
-        type: 'FETCH_TOP_RATED',
-        payload: response.data
+// export const fetchTopRated = dispatch => {
+//   axios
+//   .get(`https://api.themoviedb.org/3/movie/top_rated?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
+//     // .get(`${HOST_URL}/top_rated`)
+//     .then(response =>
+//       dispatch({
+//         type: 'FETCH_TOP_RATED',
+//         payload: response.data
+//       })
+//       )
+//       .catch(err => console.log(err));
+//   };
+
+export const fetchTopRated = () => {
+  return (dispatch) => {
+    fetch(`${HOST_URL}/top_rated`)
+      .then(resp => resp.json())
+      .then(result => {
+        dispatch({ type: 'FETCH_TOP_RATED', payload: result })
       })
-      )
-      .catch(err => console.log(err));
-    };
-    
-    export const fetchPopular = dispatch => {
-      console.log("Gonna try and fetch popular movies")
-      axios
-      // .get(`https://api.themoviedb.org/3/movie/popular?api_key=2c7ac09213443b720c7abaa7b2c0ec29&language=en-US&page=1`)
-      .get(`${HOST_URL}/popular/1`)
+  }
+}
+
+export const fetchPopular = () => {
+  return (dispatch) => {
+    fetch(`${HOST_URL}/popular/1`)
+      .then(resp => resp.json())
+      .then(result => {
+        dispatch({ type: 'FETCH_POPULAR', payload: result })
+      })
+  }
+}
+
+export const fetchLatest = dispatch => {
+  axios
+    // .get(`https://api.themoviedb.org/3/movie/latest?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
+    .get(`${HOST_URL}/latest`)
     .then(response =>
       dispatch({
-        type: 'FETCH_POPULAR',
+        type: 'FETCH_LATEST',
         payload: response.data
       })
     )
     .catch(err => console.log(err));
 };
 
-export const fetchLatest = dispatch => {
+// need to adjust still
+export const userMovies = (movieObj) => dispatch => {
   axios
-  // .get(`https://api.themoviedb.org/3/movie/latest?api_key=2c7ac09213443b720c7abaa7b2c0ec29`)
-    .get(`${HOST_URL}/latest`)
+    .post(`${HOST_URL}/usermovies`)
     .then(response =>
       dispatch({
-        type: 'FETCH_LATEST',
+        type: 'USER_MOVIES',
         payload: response.data
       })
     )

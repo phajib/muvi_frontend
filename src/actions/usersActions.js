@@ -10,26 +10,28 @@ let HOST_URL = "http://localhost:3001/api/v1"
 //-----------USERS--------------------
 export const signUp = (userInfo) => {
   return (dispatch) => {
-    axios.get(`${HOST_URL}/api/v1/users`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        user: {
-          username: userInfo.username,
-          password: userInfo.password,
-          about: userInfo.about,
-          profile_picture: userInfo.avatar,
-        }
-      })
+    axios.post(`${HOST_URL}/api/v1/users`, {userInfo})
+    // }
+    //   method: "POST",
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     user: {
+    //       username: userInfo.username,
+    //       password: userInfo.password,
+    //       about: userInfo.about,
+    //       profile_picture: userInfo.avatar,
+    //     }
+    //   })
+    // })
+    // .then(response => response.json())
+    .then(data => {
+      dispatch({ type: 'CURRENT_USER', payload: data.user })
+      localStorage.setItem("jwt", data.jwt)
     })
-      .then(response => response.json())
-      .then(data => {
-        dispatch({ type: 'CURRENT_USER', payload: data.user })
-        localStorage.setItem("jwt", data.jwt)
-      })
+    .catch(err => console.log(err));
   }
 }
 
@@ -52,7 +54,7 @@ export const signUp = (userInfo) => {
 
 export const logIn = (userInfo) => {
   return (dispatch) => {
-    axios.get(`${HOST_URL}/api/v1/login`, {
+    axios.post(`${HOST_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,20 +67,21 @@ export const logIn = (userInfo) => {
         }
       })
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.message === "INVALID: username or password") {
-          Swal.fire({
-            title: 'Unable to Login!',
-            text: `${data.message}`,
-            icon: 'error',
-            confirmButtonText: 'Back'
-          })
-        } else {
-          dispatch({ type: 'CURRENT_USER', payload: data.user })
-          localStorage.setItem("jwt", data.jwt)
-        }
-      })
+    // .then(res => res.json())
+    .then(data => {
+      if (data.message === "INVALID: username or password") {
+        Swal.fire({
+          title: 'Unable to Login!',
+          text: `${data.message}`,
+          icon: 'error',
+          confirmButtonText: 'Back'
+        })
+      } else {
+        dispatch({ type: 'CURRENT_USER', payload: data.user })
+        localStorage.setItem("jwt", data.jwt)
+      }
+    })
+    .catch(err => console.log(err));
   }
 }
 
@@ -87,3 +90,23 @@ export const signOut = () => {
   return {type: "SIGN_OUT", payload: []}
 }
 
+export const checkUser = () => {
+  return (dispatch) => {
+  // if (localStorage.getItem('jwt')){
+  //   return (dispatch) => {
+  //     axios.get(`${HOST_URL}/profile`, {
+  //       headers: {
+  //         "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+  //       }
+  //     })
+  //     .then(res => res.json())
+  //     .then(user => {
+  //       dispatch({type: 'CURRENT_USER', payload: user.updateUser})
+  //     })
+  //   }
+  // }
+  
+    axios.get(`${HOST_URL}/profile`)
+    .then(user => dispatch({type: 'CURRENT_USER', payload: user.updateUser}))
+  }
+}
