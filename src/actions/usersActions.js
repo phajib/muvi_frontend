@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
@@ -10,51 +10,37 @@ let HOST_URL = "http://localhost:3001/api/v1"
 //-----------USERS--------------------
 export const signUp = (userInfo) => {
   return (dispatch) => {
-    axios.post(`${HOST_URL}/api/v1/users`, {userInfo})
+    // axios.post(`${HOST_URL}/api/v1/users`, {userInfo}, {withCredentials: true})
     // }
-    //   method: "POST",
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     user: {
-    //       username: userInfo.username,
-    //       password: userInfo.password,
-    //       about: userInfo.about,
-    //       profile_picture: userInfo.avatar,
-    //     }
-    //   })
-    // })
-    // .then(response => response.json())
+    fetch(`${HOST_URL}/users`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        user: {
+          username: userInfo.username,
+          password: userInfo.password,
+          about: userInfo.about,
+          profile_picture: userInfo.avatar,
+        }
+      })
+    })
+    .then(response => response.json())
     .then(data => {
       dispatch({ type: 'CURRENT_USER', payload: data.user })
+      // dispatch({ type: 'CREATE_USER', payload: data.user })
       localStorage.setItem("jwt", data.jwt)
     })
     .catch(err => console.log(err));
   }
 }
 
-// export const signUp = newUser => async (dispatch) => {
-//   try {
-//     dispatch({ type: 'CREATE_USER', ...newUser});
-
-//     const response = await axios({
-//       method: 'POST',
-//       url: `${HOST_URL}/users`,
-//       data: { user: newUser },
-//       crossdomain: true
-//     });
-//     const { token } = response.data
-//     localStorage.setItem('jwt', token);
-//   } catch {
-//     dispatch({ type: 'CREATE_USER_ERROR' });
-//   }
-// };
-
 export const logIn = (userInfo) => {
   return (dispatch) => {
-    axios.post(`${HOST_URL}/login`, {
+    // axios.post(`${HOST_URL}/login`, {userInfo})
+    fetch(`${HOST_URL}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,9 +53,10 @@ export const logIn = (userInfo) => {
         }
       })
     })
-    // .then(res => res.json())
+    .then(res => res.json())
     .then(data => {
-      if (data.message === "INVALID: username or password") {
+      console.log(data)
+      if (data.message === "Invalid username or password") {
         Swal.fire({
           title: 'Unable to Login!',
           text: `${data.message}`,
@@ -77,11 +64,11 @@ export const logIn = (userInfo) => {
           confirmButtonText: 'Back'
         })
       } else {
-        dispatch({ type: 'CURRENT_USER', payload: data.user })
+        dispatch({ type: 'CURRENT_USER', payload: data.userInfo })
         localStorage.setItem("jwt", data.jwt)
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
   }
 }
 
@@ -91,22 +78,23 @@ export const signOut = () => {
 }
 
 export const checkUser = () => {
-  return (dispatch) => {
-  // if (localStorage.getItem('jwt')){
-  //   return (dispatch) => {
-  //     axios.get(`${HOST_URL}/profile`, {
-  //       headers: {
-  //         "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-  //       }
-  //     })
-  //     .then(res => res.json())
-  //     .then(user => {
-  //       dispatch({type: 'CURRENT_USER', payload: user.updateUser})
-  //     })
-  //   }
-  // }
-  
-    axios.get(`${HOST_URL}/profile`)
-    .then(user => dispatch({type: 'CURRENT_USER', payload: user.updateUser}))
+  // return (dispatch) => {
+  if (localStorage.getItem('jwt')){
+    return (dispatch) => {
+      fetch(`${HOST_URL}/profile`, {
+        headers: {
+          "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+        }
+      })
+      .then(res => res.json())
+      .then(user => {
+        dispatch({type: 'CURRENT_USER', payload: user.user})
+      })
+    }
   }
+
+  //   axios.get(`${HOST_URL}/profile`)
+  //   .then(user => dispatch({type: 'CURRENT_USER', payload: user.updateUser}))
+  // }
 }
+
