@@ -7,6 +7,7 @@ export const FETCH_UPCOMING = 'FETCH_UPCOMING';
 export const FETCH_LATEST = 'FETCH_LATEST';
 export const FETCH_POPULAR = 'FETCH_POPULAR';
 export const FETCH_TOP_RATED = 'FETCH_TOP_RATED';
+export const USER_MOVIES = 'USER_MOVIES';
 
 // COMMENTS
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
@@ -15,11 +16,6 @@ export const NEW_COMMENT = 'NEW_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 // USERS
-export const LOGIN = 'LOGIN';
-export const USER_INFO = 'USER_INFO';
-export const USER_DETAILS = 'USER_DETAILS';
-export const USERS_PROFILE = 'USERS_PROFILE';
+export const CURRENT_USER = 'CURRENT_USER';
 export const EDIT_USER = 'EDIT_USER';
-export const USERS_MOVIES = 'USERS_MOVIES';
-export const ADD_TO_USERS_MOVIES = 'ADD_TO_USERS_MOVIES';
-
+export const SIGN_OUT = 'SIGN_OUT';
