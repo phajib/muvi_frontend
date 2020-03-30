@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import SearchForm from './SearchForm';
-import MoviesContainer from './MoviesContainer';
+import MoviesContainer from '../Movie/MoviesContainer';
 import Spinner from '../layout/Spinner';
 import PopularMovies from './PopularMovies'
 import TopRatedMovies from './TopRatedMovies';
@@ -18,10 +18,10 @@ export class Landing extends Component {
 
         <div className="container">
           <div className="row">
-            <div className="col-sm text-sm-center text-success">
+            <div className="col-sm">
               <PopularMovies />
             </div>
-            <div className="col-sm text-sm-center text-success">
+            <div className="col-sm">
               <TopRatedMovies />
             </div>
 
