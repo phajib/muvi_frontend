@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+// eslint-disable-next-line
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 import './App.css';
@@ -10,7 +11,7 @@ import Movie from './Components/Movie/Movie';
 import About from './Components/About/About'
 import Footer from './Components/layout/Footer';
 import UserPage from './Components/User/UserPage'
-// import UserEdit from './Components/User/UserEdit'
+import UserEdit from './Components/User/UserEdit'
 import LoginSignUpPage from './Components/LoginSignUp/LoginSignUpPage'
 import TopRatedMovies from './Components/Home/TopRatedMovies'
 import PopularMovies from './Components/Home/PopularMovies'
@@ -19,16 +20,20 @@ import { fetchTopRated, fetchPopular } from './actions/movieActions'
 import { checkUser } from './actions//usersActions'
 
 
+// debugger
 class App extends Component {
   componentDidMount() {
     this.props.fetchTopRated()
     this.props.fetchPopular()
+    // this.props.fetchMovie()
+    // this.props.fetchComments()
+    // this.props.fetchUpcoming()
+    // this.props.fetchLatest()
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
     }
   }
-
   render() {
     return (
       <div>
@@ -36,19 +41,23 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/movies" component={Landing} />
-          < Route exact path="/movie/:id" render={(props) => {
+          {/* < Route exact path="/movie/:id" render={(props) => {
             let movie_id = props.match.params.id 
              return  <Movie movieID={movie_id} /> 
-          }}/>
-          < Route exact path="/profile" component={() => {
+          }}/> */}
+          <Route exact path="/movie/:id" component={Movie} />
+          < Route exact path='/profile' component={UserPage} />
+          {/* < Route exact path="/profile" component={() => {
               return this.props.currentUser.length === 0 ? < Redirect to="/login"/> : <UserPage />
-          }}/>
+          }}/> */}
+          < Route exact path='/profile/edit' component={UserEdit} />
           {/* < Route exact path="/profile/edit" component={() => {
               return this.props.currentUser.length === 0 ? < Redirect to="/login"/> : <UserEdit />
           }}/> */}
-          < Route exact path="/login" render={() => {
+          < Route exact path='/login' component={LoginSignUpPage} />
+          {/* < Route exact path="/login" render={() => {
             return this.props.currentUser.length === 0 ? < LoginSignUpPage /> : < Redirect to="/"/>
-          }}/> 
+          }}/> */}
 
           < Route exact path="/user/:id" render={(props) => {
             let profileId = props.match.params.id
