@@ -29,8 +29,10 @@ export const fetchMovies = text => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const fetchMovie = movie_id => dispatch => {
-  axios.get(`${HOST_URL}/movie/${movie_id}`)
+export const fetchMovie = id => dispatch => {
+  axios.get(`${HOST_URL}/movie/${id}`)
+  // fetch(`${HOST_URL}/movie/${tmdb_id}`)
+    // .then(res => res.json())
     .then(response => {
       dispatch({ type: 'FETCH_MOVIE', payload: response.data })
     })

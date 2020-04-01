@@ -8,10 +8,14 @@ let HOST_URL = "http://localhost:3001/api/v1"
 // const CURRENT_USER = 'CURRENT_USER'
 
 //-----------USERS--------------------
-export const signUp = (userInfo) => {
+function setCurrentUser(user) {
+  return {type: "CURRENT_USER", payload: user}
+}
+
+export const signUp = (userInfo) => {//dispatch => {
+  console.log("sign up", userInfo)
   return (dispatch) => {
-    // axios.post(`${HOST_URL}/api/v1/users`, {userInfo}, {withCredentials: true})
-    // }
+    // axios.post(`${HOST_URL}/users`, {userInfo})
     fetch(`${HOST_URL}/users`, {
       method: "POST",
       headers: {
@@ -23,17 +27,20 @@ export const signUp = (userInfo) => {
           username: userInfo.username,
           password: userInfo.password,
           about: userInfo.about,
-          profile_picture: userInfo.avatar,
+          profile_picture: userInfo.profile_picture,
         }
       })
     })
     .then(response => response.json())
     .then(data => {
-      dispatch({ type: 'CURRENT_USER', payload: data.user })
-      // dispatch({ type: 'CREATE_USER', payload: data.user })
+      console.log(data)
       localStorage.setItem("jwt", data.jwt)
+      // dispatch(setCurrentUser(data.user))
+      // dispatch({ type: 'CURRENT_USER', payload: data.user })
+      dispatch({ type: 'CREATE_USER', payload: data.user })
     })
     .catch(err => console.log(err));
+  // }
   }
 }
 
@@ -64,7 +71,8 @@ export const logIn = (userInfo) => {
           confirmButtonText: 'Back'
         })
       } else {
-        dispatch({ type: 'CURRENT_USER', payload: data.userInfo })
+        dispatch(setCurrentUser(data.user))
+        // dispatch({ type: 'CURRENT_USER', payload: data.userInfo })
         localStorage.setItem("jwt", data.jwt)
       }
     })
@@ -88,13 +96,13 @@ export const checkUser = () => {
       })
       .then(res => res.json())
       .then(user => {
-        dispatch({type: 'CURRENT_USER', payload: user.user})
+        dispatch({type: 'CURRENT_USER', payload: user})
+        // dispatch(setCurrentUser(user.user))
       })
     }
   }
-
-  //   axios.get(`${HOST_URL}/profile`)
-  //   .then(user => dispatch({type: 'CURRENT_USER', payload: user.updateUser}))
-  // }
 }
 
+// function setCurrentUser(user) {
+//   return {type: "CURRENT_USER", payload: user}
+// }

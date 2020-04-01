@@ -1,8 +1,8 @@
 const initialState = {
-    text: '',
+    content: '',
     movies: [],
     loading: false,
-    movie: []
+    movieComments: []
 };
 
 export default function (state = initialState, action) {

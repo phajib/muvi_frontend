@@ -32,7 +32,7 @@ export const fetchNewComment = dispatch => {
             })
         } else {
             console.log(newComment)
-            this.props.newCommnetAdded(newComment)
+            this.props.newCommentAdded(newComment)
             this.props.addComment(newComment)
         }
         })
