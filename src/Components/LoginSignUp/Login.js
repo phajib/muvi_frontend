@@ -1,11 +1,8 @@
 import React, { Component } from "react"
-
-const sample = {
-    width: '40vw'
-}
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class Login extends Component {
-    constructor(){
+    constructor() {
         super()
 
         this.state = {
@@ -20,37 +17,41 @@ class Login extends Component {
         })
     }
 
-    render(){
-        return(
-            <div style={sample}>
-               <h1 className="is-size-1 login-header">Login</h1>
-               <div className="field">
-                    <label className="label">Username</label>
-                    <div className="control">
-                        <input onChange={(event) => this.handleInputChange(event)}
-                        className="input" type="text" name="username" placeholder="Username"/>
-                    </div>
-                </div> 
+    render() {
+        return (
+            <div className='animated bounceIn'>
+                <Grid textAlign='center' style={{ height: '78vh' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 500 }}>
+                        <Header as='h2' color='green' textAlign='center'>
+                            <Image src='https://media1.giphy.com/media/dPXxkfC3UKvbG/giphy.gif' /> Log-in to your account
+                            </Header>
+                        <Form size='large'>
+                            <Segment stacked>
+                                <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input
+                                    fluid
+                                    icon='lock'
+                                    iconPosition='left'
+                                    placeholder='Password'
+                                    type='password'
+                                    onChange={(event) => this.handleInputChange(event)}
+                                />
 
-                <div className="field">
-                    <label className="label">Password</label>
-                    <div className="control">
-                        <input onChange={(event) => this.handleInputChange(event)}
-                        className="input" type="password" name="password" placeholder="Password"/>
-                    </div>
-                </div>
-
-                <div className="control form-submit-container">
-                    <button onClick={ (event) => {this.props.loggingIn(event, this.state)}}
-                    className="button is-link">Login</button>
-                    {/* eslint-disable-next-line */}
-                    <span>  Don't have an account? <a onClick={() => this.props.switchForm()}>
-                        Sign Up
-                        </a></span>
-                </div>
+                                <Button color='green' fluid size='large' onClick={(event) => { this.props.loggingIn(event, this.state) }}>
+                                    Login
+                                    </Button>
+                            </Segment>
+                        </Form>
+                        <Message>
+                            {/* eslint-disable-next-line */}
+                                New to us? <Button onClick={() => this.props.switchForm()}>Sign Up</Button>
+                        </Message>
+                    </Grid.Column>
+                </Grid>
             </div>
         )
     }
 }
 
 export default Login
+ 

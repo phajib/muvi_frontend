@@ -14,7 +14,7 @@ class LoginPage extends Component {
         }
     }
 
-    switchForm = () => {
+    switchForm = () => {        // switches forms from Login to Sign Up
         this.setState({
             displayLogin: !this.state.displayLogin
         })
@@ -22,7 +22,7 @@ class LoginPage extends Component {
 
     createUser = (event, userInfo) => {
         event.preventDefault();
-        this.props.signUp(userInfo)     //signUp ACTION apparently not a function
+        this.props.userSignUp(userInfo)
     }
 
     loggingIn = (event, userInfo) => {
@@ -33,7 +33,7 @@ class LoginPage extends Component {
     render(){
         return(
             <div className="login-page-container">
-                <div className="login-signup-form animated bounceInUp">
+                <div className="login-signup-form animated bounceIn">
                     {this.state.displayLogin ? 
                         (< Login switchForm={this.switchForm} loggingIn={this.loggingIn} />) 
                         :
@@ -46,7 +46,7 @@ class LoginPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    signUp: (userInfo) => {dispatch(signUp(userInfo))},
+    userSignUp: (userInfo) => {dispatch(signUp(userInfo))},
     logIn: (userInfo) => {dispatch(logIn(userInfo))}
 })
 
