@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div>
+    <div className="animated slideInUp">
       <div className="row">
         <div className="col-md-12">
           <div className="footer p-3 mt-4 text-center bg-secondary text-light">
