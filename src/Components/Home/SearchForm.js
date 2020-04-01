@@ -22,7 +22,7 @@ export class SearchForm extends Component {
 
   render() {
     return (
-      <div className="jumbotron jumbotron-fluid mt-2 text-center">
+      <div className="jumbotron jumbotron-fluid mt-2 text-center animated fadeIn">
         <div className="container">
           <h1 className="display-5 mb-5 animated bounceIn">
             <i className="fa fa-search animated bounceIn" /> Search for a movie...

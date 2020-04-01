@@ -9,7 +9,7 @@ export class PopularMovies extends Component {
     const { movies } = this.props;
 
     let content = '';
-    content = movies.Response === 'True' ? movies.popularMovies.slice(0, 3).map((movie, index) => 
+    content = movies.popularMovies > 0 ? movies.popularMovies.slice(0, 5).map((movie, index) => 
       (<MovieCard key={index} movie={movie} />)) : null;
 
     return <div className="row">{content}</div>;

@@ -8,7 +8,15 @@ import Spinner from '../layout/Spinner';
 import PopularMovies from './PopularMovies'
 import TopRatedMovies from './TopRatedMovies';
 
+import { fetchPopular, fetchTopRated } from '../../actions/movieActions'
+
+
 export class Landing extends Component {
+  componentDidMount() {
+    this.props.fetchPopular()
+    this.props.fetchTopRated()
+  }
+
   render() {
     const { loading } = this.props; //take out loading from props
     return (
@@ -19,10 +27,14 @@ export class Landing extends Component {
         <div className="container">
           <div className="row">
             <div className="col-sm">
+              Popular Movies
               <PopularMovies />
+              {/* {loading ? <Spinner /> : <MoviesContainer />} */}
             </div>
             <div className="col-sm">
+              Top Rated Movies
               <TopRatedMovies />
+              {/* {loading ? <Spinner /> : <MoviesContainer />} */}
             </div>
 
           </div>
@@ -37,5 +49,12 @@ const mapStateToProps = state => ({
   loading: state.movies.loading
 });
 
-export default connect(mapStateToProps)(Landing);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPopular: () => {dispatch(fetchPopular())},
+    fetchTopRated: () => {dispatch(fetchTopRated())}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);
 

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import MoviesCard from '../Movie/MoviesContainer';
-// import { fetchTopRated } from '../../actions/movieActions';
 
 export class TopRatedMovies extends Component {
   render() {
     const { movies } = this.props;
 
     let content = '';
-    content = movies.Response === 'True' ? movies.topRatedMovies.slice(0, 3).map((movie, index) => 
+    content = movies.topRatedMovies > 0 ? movies.topRatedMovies.slice(0,5).map((movie, index) => 
       (<MoviesCard key={index} movie={movie} />)) : null;
 
     return <div className="row">{content}</div>;
