@@ -25,10 +25,7 @@ class App extends Component {
   componentDidMount() {
     this.props.fetchTopRated()
     this.props.fetchPopular()
-    // this.props.fetchMovie()
-    // this.props.fetchComments()
     // this.props.fetchUpcoming()
-    // this.props.fetchLatest()
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
@@ -36,7 +33,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="App">
         <Navbar />
         <Switch>
           <Route exact path="/" component={Landing} />
@@ -46,14 +43,15 @@ class App extends Component {
              return  <Movie movieID={movie_id} /> 
           }}/> */}
           <Route exact path="/movie/:id" component={Movie} />
-          < Route exact path='/profile' component={UserPage} />
-          {/* < Route exact path="/profile" component={() => {
-              return this.props.currentUser.length === 0 ? < Redirect to="/login"/> : <UserPage />
-          }}/> */}
-          < Route exact path='/profile/edit' component={UserEdit} />
-          {/* < Route exact path="/profile/edit" component={() => {
+          {/* < Route exact path='/profile' component={UserPage} /> */}
+          < Route exact path="/profile" render={() => {
+              return this.props.currentUser.length === 0 ?
+              <Redirect to="/login"/> : <UserPage currentUser={this.state.currentUser} />
+          }}/>
+          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
+          < Route exact path="/profile/edit" component={() => {
               return this.props.currentUser.length === 0 ? < Redirect to="/login"/> : <UserEdit />
-          }}/> */}
+          }}/>
           < Route exact path='/login' component={LoginSignUpPage} />
           {/* < Route exact path="/login" render={() => {
             return this.props.currentUser.length === 0 ? < LoginSignUpPage /> : < Redirect to="/"/>
@@ -68,8 +66,8 @@ class App extends Component {
           <Route exact path="/popular" component={PopularMovies} />
           <Route exact path="/toprated" component={TopRatedMovies} />
           <Route exact path="/about" component={About} />
-          <Footer />
         </Switch>
+      <Footer />
       </div>
     );
   }
@@ -79,6 +77,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchPopular: () => {dispatch(fetchPopular())},
     fetchTopRated: () => {dispatch(fetchTopRated())},
+    // fetchUpcoming: () => {dispatch(fetchUpcoming())},
     checkUser: () => {dispatch(checkUser())}
   }
 }

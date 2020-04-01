@@ -8,8 +8,8 @@ class CommentForm extends React.Component {
         commentContent: ""
     }
 
-    commentContentChange = (e) => {
-        this.setState({ commentContent: e.target.value })
+    commentContentInput = (event) => {
+        this.setState({ commentContent: event.target.value })
     }
 
     onSubmitComment = (event, newComment) => {
@@ -21,14 +21,14 @@ class CommentForm extends React.Component {
     render() {
         return (
             <div className="commentFormCon">
-                <p className="formLabel">Thoughts of the Movie?</p>
+                <p className="formLabel text-success">Thoughts of the Movie?</p>
                 <form id="NewCommentForm" className="ui form" onSubmit={this.onSubmitComment}>
                     <div className="field">
                         <textarea
                             rows="2"
                             name="content"
                             form="NewCommentForm"
-                            onChange={this.commentContentChange}
+                            onChange={this.commentContentInput}
                             value={this.state.commentContent}>
                         </textarea>
                     </div>

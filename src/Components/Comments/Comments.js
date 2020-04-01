@@ -6,7 +6,8 @@ const Comment = (props) => {
         {props.mycomments ? <p className="commentMovieTitle">
             {props.comment.movie_title}
             <p className="commentContent">{props.comment.content}</p>
-            </p> : props.comment.content}
+        </p>
+         : props.comment.content}
         
         {props.user.id === props.comment.user_id ?
             <i className="comDeleteButton window close outline icon"

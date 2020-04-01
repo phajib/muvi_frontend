@@ -1,8 +1,6 @@
 import React from 'react';
 import Comments from '../Comments/Comments'
 
-
-
 const UserComments = (props) => {
     return (
       <div className={props.classes}>
