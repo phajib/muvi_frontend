@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import MovieSampleCard from '../Movie/MovieCard';
 
-export class TopRatedMovies extends Component {
+export class UpcomingMovies extends Component {
   render() {
     const { movies } = this.props;
 
@@ -12,16 +12,16 @@ export class TopRatedMovies extends Component {
       (<MovieSampleCard key={index} movie={movies}/>)) : null;
 
     return (
-      <>
-        <h2 className="animated bounceIn">Top Rated Movies</h2>
+        <>
+        <h2 className="animated bounceIn">Up Coming Movies</h2>
         <div className="row center-block rounded animated fadeIn">{content}</div>
-      </>
+        </>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  movies: state.movies.topRatedMovies
+  movies: state.movies.upcomingMovies
 });
 
-export default connect(mapStateToProps)(TopRatedMovies);
+export default connect(mapStateToProps)(UpcomingMovies);

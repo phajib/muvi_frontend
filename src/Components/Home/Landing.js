@@ -5,16 +5,20 @@ import { connect } from 'react-redux';
 import SearchForm from './SearchForm';
 import MoviesContainer from '../Movie/MoviesContainer';
 import Spinner from '../layout/Spinner';
-import PopularMovies from './PopularMovies'
-import TopRatedMovies from './TopRatedMovies';
+// import PopularMovies from './PopularMovies'
+import UpcomingMovies from './UpcomingMovies'
+// import TopRatedMovies from './TopRatedMovies';
+// import { LatestMovies } from './LatestMovies';
 
-import { fetchPopular, fetchTopRated } from '../../actions/movieActions'
+import { fetchPopular, fetchUpcoming, fetchTopRated, fetchLatest } from '../../actions/movieActions'
 
 
 export class Landing extends Component {
   componentDidMount() {
     this.props.fetchPopular()
+    this.props.fetchUpcoming()
     this.props.fetchTopRated()
+    this.props.fetchLatest()
   }
 
   render() {
@@ -26,15 +30,13 @@ export class Landing extends Component {
 
         <div className="container">
           <div className="row">
+            {/* <div className="col-sm">
+              <LatestMovies />
+              {loading ? <Spinner /> : <MoviesContainer />}
+            </div> */}
             <div className="col-sm">
-              Popular Movies
-              <PopularMovies />
-              {/* {loading ? <Spinner /> : <MoviesContainer />} */}
-            </div>
-            <div className="col-sm">
-              Top Rated Movies
-              <TopRatedMovies />
-              {/* {loading ? <Spinner /> : <MoviesContainer />} */}
+              <UpcomingMovies />
+              {loading ? <Spinner /> : <MoviesContainer />}
             </div>
 
           </div>
@@ -52,7 +54,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPopular: () => {dispatch(fetchPopular())},
-    fetchTopRated: () => {dispatch(fetchTopRated())}
+    fetchUpcoming: () => {dispatch(fetchUpcoming())},
+    fetchTopRated: () => {dispatch(fetchTopRated())},
+    fetchLatest: () => {dispatch(fetchLatest())}
   }
 }
 
