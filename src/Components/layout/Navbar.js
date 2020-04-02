@@ -25,8 +25,14 @@ class Navbar extends Component {
                 <Link className="navbar-brand text-white text-sm" to="/popular/1">
                   Popular Movies
                 </Link>
+                <Link className="navbar-brand text-white text-sm" to="/upcoming">
+                  Upcoming Movies
+                </Link>
                 <Link className="navbar-brand text-white text-sm" to="/top_rated">
                   Top Rated Movies
+                </Link>
+                <Link className="navbar-brand text-white text-sm" to="/latest">
+                  Latest Movies
                 </Link>
                 <Link className="navbar-brand text-white text-lg" to="/about">
                   About

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addToList } from '../../actions/movieActions'
 
-import CommentForm from '../Comments/CommentForm'
-import MovieComments from '../Movie/MovieComments'
+// import CommentForm from '../Comments/CommentForm'
+// import MovieComments from '../Movie/MovieComments'
 
 import { fetchMovie, setLoading } from '../../actions/movieActions'
 
@@ -24,10 +25,10 @@ export class Movie extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-4 card card-body">
-              <img src={"https://image.tmdb.org/t/p/w200/" + movie.poster_path} className="thumbnail" alt="Poster" />
+              <img src={"https://image.tmdb.org/t/p/w300/" + movie.poster_path} className="thumbnail" alt="Poster" />
             </div>
             <div className="col-md-8">
-              <h2 className="mb-4 text-white">{movie.title}</h2>
+              <h2 className="mb-4 text-success">{movie.title}</h2>
               <ul className="list-group">
                 {/* <li className="list-group-item">
                   <strong>Overview:</strong> {movie.overview}
@@ -47,7 +48,7 @@ export class Movie extends Component {
           <div className="row">
             <div className="card card-body bg-dark my-5 text-light">
               <div className="col-md-12">
-                <h3>Overview</h3>
+                <h3 className="text-success">Overview</h3>
                 {movie.overview}
                 <hr />
                 <a
@@ -59,19 +60,19 @@ export class Movie extends Component {
                   View on IMDB
                 </a>
 
-                <Link to="/" className="btn btn-default text-light">
+                <Link to="/" className="btn btn-default text-success">
                   Go Back To Search
                 </Link>
               </div>
             </div>
           </div>
-          <button onClick={() => {this.props.addToList(this.props.movie)} } to='/movies'>
+          <button onClick={() => {addToList(movie)} } to='/movies' className="btn btn-success">
             Save Movie
           </button>
           
           <div className="comments five wide column">
-            <CommentForm movie={this.props.movie} newCommentAdded={this.props.newCommentAdded} addComment={this.props.addComment} /> 
-            <MovieComments movieComments={this.props.movieComments} deleteComment={this.props.deleteComment} classes="" mycomments={false} user={this.props.user}/>
+            {/* <CommentForm movie={this.props.movie} newCommentAdded={this.props.newCommentAdded} addComment={this.props.addComment} /> 
+            <MovieComments movieComments={this.props.movieComments} deleteComment={this.props.deleteComment} classes="" mycomments={false} user={this.props.user}/> */}
           </div>
         </div>
       </div>

@@ -14,9 +14,11 @@ import UserPage from './Components/User/UserPage'
 import UserEdit from './Components/User/UserEdit'
 import LoginSignUpPage from './Components/LoginSignUp/LoginSignUpPage'
 import TopRatedMovies from './Components/Home/TopRatedMovies'
+import UpcomingMovies from './Components/Home/UpcomingMovies'
 import PopularMovies from './Components/Home/PopularMovies'
+import LatestMovies from './Components/Home/LatestMovies'
 
-import { fetchTopRated, fetchPopular } from './actions/movieActions'
+import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest } from './actions/movieActions'
 import { checkUser } from './actions//usersActions'
 
 
@@ -24,8 +26,9 @@ import { checkUser } from './actions//usersActions'
 class App extends Component {
   componentDidMount() {
     this.props.fetchTopRated()
+    this.props.fetchUpcoming()
     this.props.fetchPopular()
-    // this.props.fetchUpcoming()
+    this.props.fetchLatest()
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
@@ -63,8 +66,10 @@ class App extends Component {
             return (userId === parseInt(profileId)) ? <UserPage /> : <UserPage profileId={profileId} />
           }} />
 
-          <Route exact path="/popular" component={PopularMovies} />
-          <Route exact path="/toprated" component={TopRatedMovies} />
+          <Route exact path="/popular/1" component={PopularMovies} />
+          <Route exact path="/upcoming" component={UpcomingMovies} />
+          <Route exact path="/top_rated" component={TopRatedMovies} />
+          <Route exact path="/latest" component={LatestMovies} />
           <Route exact path="/about" component={About} />
         </Switch>
       <Footer />
@@ -76,8 +81,9 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPopular: () => {dispatch(fetchPopular())},
+    fetchUpcoming: () => {dispatch(fetchUpcoming())},
     fetchTopRated: () => {dispatch(fetchTopRated())},
-    // fetchUpcoming: () => {dispatch(fetchUpcoming())},
+    fetchLatest: () => {dispatch(fetchLatest())},
     checkUser: () => {dispatch(checkUser())}
   }
 }
