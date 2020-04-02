@@ -1,6 +1,7 @@
 // import axios from 'axios';
 import Swal from 'sweetalert2'
 
+
 let HOST_URL = "http://localhost:3001/api/v1"
 
 // const CREATE_USER = 'CREATE_USER'
@@ -8,9 +9,9 @@ let HOST_URL = "http://localhost:3001/api/v1"
 // const CURRENT_USER = 'CURRENT_USER'
 
 //-----------USERS--------------------
-function setCurrentUser(user) {
-  return {type: "CURRENT_USER", payload: user}
-}
+// function setCurrentUser(user) {
+//   return {type: "CURRENT_USER", payload: user}
+// }
 
 export const signUp = (userInfo) => {//dispatch => {
   console.log("sign up", userInfo)
@@ -33,7 +34,7 @@ export const signUp = (userInfo) => {//dispatch => {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data)
+      // console.log(data)
       localStorage.setItem("jwt", data.jwt)
       // dispatch(setCurrentUser(data.user))
       // dispatch({ type: 'CURRENT_USER', payload: data.user })
@@ -45,6 +46,7 @@ export const signUp = (userInfo) => {//dispatch => {
 }
 
 export const logIn = (userInfo) => {
+  // debugger
   return (dispatch) => {
     // axios.post(`${HOST_URL}/login`, {userInfo})
     fetch(`${HOST_URL}/login`, {
@@ -71,8 +73,8 @@ export const logIn = (userInfo) => {
           confirmButtonText: 'Back'
         })
       } else {
-        dispatch(setCurrentUser(data.user))
-        // dispatch({ type: 'CURRENT_USER', payload: data.userInfo })
+        // dispatch(setCurrentUser(data.user))
+        dispatch({ type: 'CURRENT_USER', payload: data.user })
         localStorage.setItem("jwt", data.jwt)
       }
     })

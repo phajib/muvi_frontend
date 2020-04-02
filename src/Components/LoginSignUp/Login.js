@@ -27,8 +27,9 @@ class Login extends Component {
                             </Header>
                         <Form size='large'>
                             <Segment stacked>
-                                <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
                                 <Form.Input
+                                    name="password"
                                     fluid
                                     icon='lock'
                                     iconPosition='left'

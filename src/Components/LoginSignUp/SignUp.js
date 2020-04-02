@@ -105,10 +105,10 @@ class Signup extends Component {
                             </Header>
                         <Form size='large'>
                             <Segment stacked>
-                                <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
-                                <Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={(event) => this.handleInputChange(event)} />
-                                <Form.Input fluid icon='book' iconPosition='left' placeholder='Something about you...' onChange={(event) => this.handleInputChange(event)} />
-                                <Form.Input fluid icon='file image' iconPosition='left' placeholder='Profile Picture' type='file' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="password" fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="about" fluid icon='book' iconPosition='left' placeholder='Something about you...' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="profile_picture" fluid icon='file image' iconPosition='left' placeholder='Profile Picture' type='file' onChange={(event) => this.handleInputChange(event)} />
 
                                 <Button color='green' fluid size='large' onClick={(event) => { this.props.createUser(event, this.state) }}>
                                     Sign Up
