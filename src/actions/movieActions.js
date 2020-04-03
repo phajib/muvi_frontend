@@ -10,10 +10,6 @@ export const setLoading = () => {
 };
 
 //-----------MOVIES--------------------
-// export const searchMovie = text => dispatch => {
-//   dispatch({ type: 'SEARCH_MOVIE',payload: text })
-// }
-
 export const searchMovie = text => dispatch => {
   dispatch({
     type: 'SEARCH_MOVIE',
@@ -37,8 +33,8 @@ export const fetchMovie = id => dispatch => {
       dispatch({ type: 'FETCH_MOVIE', payload: response.data })
     })
     .catch(err => console.log(err));
-};
-
+  };
+  
 export const fetchUpcoming = () => {
   return (dispatch) => {
   fetch(`${HOST_URL}/upcoming`)
@@ -88,7 +84,7 @@ export const userMovies = (user) => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const addToList = (movieObj) => {
+export const addToList = (movieObj, users) => {
   fetch(`${HOST_URL}/usermovies`, {
     method: 'POST',
     headers: {
@@ -98,26 +94,35 @@ export const addToList = (movieObj) => {
     }, 
     body: JSON.stringify({
       movie: movieObj,
-      user: this.state.currentUser.user
+      user: users
     })
   })
   .then(resp => resp.json())
   .then(data => {
-    if (data.title) {
-      return { myMovieList: data }
+    switch(data.message) {
+        case "Already Liked!":
+            Swal.fire({
+                title: 'Already Liked!',
+                text: 'Time to watch more movies!',
+                icon: 'error',
+                confirmButtonText: 'Back'
+            })
+            break;
+        case "Please log in":
+            Swal.fire({
+                title: `${data.message}`,
+                text: 'Login or Signup',
+                icon: 'error',
+                confirmButtonText: 'Back'
+            })
+            break;
+        default:
+            Swal.fire({
+                title: 'Added!',
+                text: `${data.title} Movie saved`,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })
     }
-    data.message ? ( 
-        Swal.fire({
-          icon: 'error',
-          title: 'Cannot to Save to List',
-          text: `${data.message}`,
-        })
-    ) :(
-      Swal.fire({
-        icon: 'success',
-        title: 'Saved',
-        text: `${data.original_title} has been added!`,
-      })
-    )
-  })
+})
 }
