@@ -2,60 +2,77 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 
-
 import { signOut } from './../../actions/usersActions'
-// import LoginSignUpPage from '../LoginSignUp/LoginSignUpPage'
 
 class Navbar extends Component {
   render () {
     return (
-      <div>
-        <nav className="navbar navbar-light bg-dark mb-5">
+      <div className="">
+        <nav className="navbar navbar-expand-sm navbar-light bg-secondary mb-5 sticky-top">
           <div className="container">
             <div className="navbar-header animated jackInTheBox">
               <Link className="navbar-brand text-white text-lg brand-text" to="/">
                 MUVI
               </Link>
             </div>
-            <ul className="navbar-nav ml-auto text-light d-inline-block">
-              <li className="nav-item d-inline-block mr-4 animated jackInTheBox">
-                <Link className="navbar-brand text-white text-lg" to="/movies">
-                  Movies
-                </Link>
-                <Link className="navbar-brand text-white text-sm" to="/popular/1">
-                  Popular Movies
-                </Link>
-                <Link className="navbar-brand text-white text-sm" to="/upcoming">
-                  Upcoming Movies
-                </Link>
-                <Link className="navbar-brand text-white text-sm" to="/top_rated">
-                  Top Rated Movies
-                </Link>
-                <Link className="navbar-brand text-white text-sm" to="/latest">
-                  Latest Movies
-                </Link>
-                <Link className="navbar-brand text-white text-lg" to="/about">
-                  About
-                </Link>
-              </li>
-              <li className="nav-item d-inline-block mr-4">
-                {Array.isArray(this.props.currentUser) ? (
-                      <Link className="nav-link" to="/profile">
-                        {this.props.currentUser}'s Profile
-                      </Link>
-                  ) : null}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-                {Array.isArray(this.props.currentUser) ? (
-                  // eslint-disable-next-line
-                  <a onClick={() => this.props.signOut()} className="nav-link">
-                    Log Out
+            {!Array.isArray(this.props.users) ? (
+              <Link className="navbar-brand nav-link text-white" to="/profile">
+                {/* {this.props.users.user.data.attributes.username}'s Profile */}
+                Profile
+              </Link>
+            ) : null}
+
+            <div class="collapse navbar-collapse" id="navbarText">
+              <ul className="navbar-nav ml-auto text-light d-inline-block">
+                <li className="nav-item dropdown d-inline-block mr-4 animated jackInTheBox">
+                  {/* eslint-disable-next-line */}
+                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <Link className="navbar-brand text-white text-lg" to="/movies">
+                      Movies
+                    </Link>
                   </a>
-                ) : (
-                    <Link className="nav-link btn btn-outline-success text-white btn-lg" to="/login">Login</Link>
-                )}
-                {/* <LoginSignUpPage /> */}
-              </li>
-            </ul>
+                  <div class="dropdown-menu bg-secondary">
+                    <Link className="dropdown-item navbar-brand text-white text-sm" to="/popular/1">
+                      Popular Movies
+                    </Link>
+                    <Link className="dropdown-item navbar-brand text-white text-sm" to="/upcoming">
+                      Upcoming Movies
+                    </Link>
+                    <Link className="dropdown-item navbar-brand text-white text-sm" to="/top_rated">
+                      Top Rated Movies
+                    </Link>
+                    <Link className="dropdown-item navbar-brand text-white text-sm" to="/latest">
+                      Latest Movies
+                    </Link>
+                  </div>
+                </li>
+                <li className="nav-item d-inline-block mr-4">
+                  {/* eslint-disable-next-line */}
+                  <a className="nav-item">
+                    <Link className="navbar-brand text-white text-lg" to="/about">
+                      About
+                    </Link>
+                  </a>
+                </li>
+                <li className="nav-item d-inline-block mr-4">
+                  {!Array.isArray(this.props.users) ? (
+                    // eslint-disable-next-line 
+                    <button onClick={() => this.props.signOut()} className="nav-link btn btn-outline-success text-white btn-lg">
+                      Log Out
+                    </button>
+                  ) : (
+                    <Link
+                      className="btn btn-outline-success text-white btn-lg" to="/login">
+                        Login
+                    </Link>
+                  )}
+                </li>
+              </ul>
+            </div>
           </div>
         </nav>
       </div>
@@ -64,10 +81,8 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser
+  users: state.users
 })
-
-
 
 const mapDispatchToProps = dispatch => ({
   signOut: () => dispatch(signOut())

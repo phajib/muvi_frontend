@@ -11,8 +11,9 @@ function Footer() {
               <a
                 href="https://github.com/phajib/muvi_frontend"
                 target="_blank"
-                rel="noopener noreferrer">
-                  MUVI
+                rel="noopener noreferrer"
+                className="text-success">
+                  MUVI&copy; 2020
               </a>
             </span>
             , Using <i className="fab fa-react" /> React JS &amp; Redux JS
@@ -28,9 +29,6 @@ function Footer() {
                 width="30" height = "30"
               ></img>
             </a>
-          </div>
-          <div className="copyright text-center">
-            &copy; 2020 MUVI
           </div>
         </div>
       </div>
