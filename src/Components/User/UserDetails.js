@@ -1,8 +1,9 @@
-import React, { Component } from "react"
+import React from 'react'
 
-class UserDetails extends Component {
-    render(){
-        let {username, about, profile_picture} = this.props.userObj
+const UserDetails = (props) => {
+    // render(){
+        if(props.user){
+        const {username, about, profile_picture} = props.user
         return (
             <div className="non-user-header animated zoomIn">
                 <div className="avatar-container">
@@ -14,8 +15,10 @@ class UserDetails extends Component {
                     <p className="about">{about}</p>
                 </div>
             </div>
-        )
-    }
+        )} else {
+            return null
+        }
+    // }
 }
 
 export default UserDetails

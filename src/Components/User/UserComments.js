@@ -5,7 +5,7 @@ const UserComments = (props) => {
     return (
       <div className={props.classes}>
         {props.mycomments ? <div className="myCommentsTitle">MY COMMENTS</div> : null}
-        {(props.movieComments.length > 0) && props.movieComments.map(comm =>
+        {(props.movieComments) && props.movieComments.map(comm =>
             <Comments
                 key={comm.id}
                 comment={comm}

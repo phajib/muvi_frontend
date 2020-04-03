@@ -20,9 +20,9 @@ class UserEdit extends Component {
 
     componentDidMount(){
         this.setState({
-            username: this.props.currentUser.username,
-            about: this.props.currentUser.about,
-            profile_picture: this.props.currentUser.profile_picture
+            username: this.props.users.username,
+            about: this.props.users.about,
+            profile_picture: this.props.users.profile_picture
         })
     }
 
@@ -121,7 +121,7 @@ class UserEdit extends Component {
 
 const mapStateToProps = state => {
     return {
-        currentUser: state.currentUser
+        users: state.users
     }
 }
 
