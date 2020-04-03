@@ -13,7 +13,7 @@ export class UpcomingMovies extends Component {
 
     return (
         <>
-        <h2 className="animated bounceIn">Up Coming Movies</h2>
+        <h2 className="text-success animated bounceIn">Up Coming Movies</h2>
         <div className="row center-block rounded animated fadeIn">{content}</div>
         </>
     )

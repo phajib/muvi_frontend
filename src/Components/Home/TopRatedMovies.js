@@ -13,7 +13,7 @@ export class TopRatedMovies extends Component {
 
     return (
       <>
-        <h2 className="animated bounceIn">Top Rated Movies</h2>
+        <h2 className="text-success animated bounceIn">Top Rated Movies</h2>
         <div className="row center-block rounded animated fadeIn">{content}</div>
       </>
     )
