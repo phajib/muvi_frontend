@@ -9,10 +9,6 @@ let HOST_URL = "http://localhost:3001/api/v1"
 // const CURRENT_USER = 'CURRENT_USER'
 
 //-----------USERS--------------------
-// function setCurrentUser(user) {
-//   return {type: "CURRENT_USER", payload: user}
-// }
-
 export const signUp = (userInfo) => {//dispatch => {
   console.log("sign up", userInfo)
   return (dispatch) => {
@@ -35,10 +31,10 @@ export const signUp = (userInfo) => {//dispatch => {
     .then(response => response.json())
     .then(data => {
       // console.log(data)
-      localStorage.setItem("jwt", data.jwt)
       // dispatch(setCurrentUser(data.user))
       // dispatch({ type: 'CURRENT_USER', payload: data.user })
       dispatch({ type: 'CREATE_USER', payload: data.user })
+      localStorage.setItem("jwt", data.jwt)
     })
     .catch(err => console.log(err));
   // }
@@ -99,12 +95,19 @@ export const checkUser = () => {
       .then(res => res.json())
       .then(user => {
         dispatch({type: 'CURRENT_USER', payload: user})
-        // dispatch(setCurrentUser(user.user))
       })
     }
   }
 }
 
-// function setCurrentUser(user) {
-//   return {type: "CURRENT_USER", payload: user}
-// }
+export const fetchUserPage = () => {
+  fetch(`${HOST_URL}/user/${this.props.profileId}/info`)
+  .then(resp => resp.json())
+  .then( data => {
+    this.setState({
+      user: data.user_info,
+      userMovies: data.userMovies,
+      comments: data.comments
+    })
+  })
+}
