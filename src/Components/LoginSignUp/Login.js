@@ -40,7 +40,7 @@ class Login extends Component {
 
                                 <Button color='green' fluid size='large' onClick={(event) => { this.props.loggingIn(event, this.state) }}>
                                     Login
-                                    </Button>
+                                </Button>
                             </Segment>
                         </Form>
                         <Message>
