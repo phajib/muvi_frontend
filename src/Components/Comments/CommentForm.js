@@ -20,14 +20,16 @@ class CommentForm extends React.Component {
 
     render() {
         return (
-            <div className="commentFormCon">
-                <p className="formLabel text-success">Thoughts of the Movie?</p>
+            <div className="container">
+                <h3 className="formLabel text-success"><strong>Comments</strong></h3>
                 <form id="NewCommentForm" className="ui form" onSubmit={this.onSubmitComment}>
-                    <div className="field">
+                    <div className="form-group">
                         <textarea
-                            rows="2"
+                            className="form-control"
+                            rows="3"
                             name="content"
                             form="NewCommentForm"
+                            placeholder="Thoughts of the Movie"
                             onChange={this.commentContentInput}
                             value={this.state.commentContent}>
                         </textarea>
