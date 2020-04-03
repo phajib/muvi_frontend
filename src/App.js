@@ -20,6 +20,7 @@ import LatestMovies from './Components/Home/LatestMovies'
 
 import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest } from './actions/movieActions'
 import { checkUser } from './actions//usersActions'
+// import Login from './Components/LoginSignUp/Login';
 
 
 // debugger
@@ -34,9 +35,10 @@ class App extends Component {
       this.props.checkUser()
     }
   }
+  
   render() {
     return (
-      <div className="App">
+      <div className="App bg-dark">
         <Navbar />
         <Switch>
           <Route exact path="/" component={Landing} />
@@ -46,25 +48,39 @@ class App extends Component {
              return  <Movie movieID={movie_id} /> 
           }}/> */}
           <Route exact path="/movie/:id" component={Movie} />
-          {/* < Route exact path='/profile' component={UserPage} /> */}
-          < Route exact path="/profile" render={() => {
-              return this.props.currentUser.length === 0 ?
-              <Redirect to="/login"/> : <UserPage currentUser={this.state.currentUser} />
-          }}/>
-          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
-          < Route exact path="/profile/edit" component={() => {
-              return this.props.currentUser.length === 0 ? < Redirect to="/login"/> : <UserEdit />
-          }}/>
-          < Route exact path='/login' component={LoginSignUpPage} />
-          {/* < Route exact path="/login" render={() => {
-            return this.props.currentUser.length === 0 ? < LoginSignUpPage /> : < Redirect to="/"/>
+
+          <Route exact path='/profile' component={UserPage} />
+          {/* < Route exact path="/profile" render={() => {
+              return this.state.users === 0 ?
+              <Redirect to="/login"/> : <UserPage users={this.state.users} />
           }}/> */}
+          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
+
+          < Route exact path="/profile/edit" component={() => {
+              return this.props.users.length === 0 ? < Redirect to="/login"/> : <UserEdit />
+          }}/>
+
+          {/* < Route exact path='/login' component={LoginSignUpPage} /> */}
+          < Route exact path="/login" render={() => {
+            return this.props.users.length === 0 ? < LoginSignUpPage /> : < Redirect to="/"/>
+          }}/>
 
           < Route exact path="/user/:id" render={(props) => {
             let profileId = props.match.params.id
-            let userId = this.props.currentUser.id
+            let userId = this.props.users.id
             return (userId === parseInt(profileId)) ? <UserPage /> : <UserPage profileId={profileId} />
           }} />
+          
+          <Route exact path="/profile" render={() => {
+            return this.state.currentUser.length === 0 ? <Redirect to="/login"/> :
+            <UserPage
+              currentUser={this.state.currentUser} 
+              myMovieList={this.state.userMovies}
+              allComments={this.state.allComments}
+              handleDeleteComment={this.handleDeleteComment}
+              signOut={this.signOut}
+            />
+          }}/>
 
           <Route exact path="/popular/1" component={PopularMovies} />
           <Route exact path="/upcoming" component={UpcomingMovies} />
@@ -90,7 +106,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser
+    users: state.users
   }
 }
 
