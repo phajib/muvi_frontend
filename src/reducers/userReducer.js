@@ -11,10 +11,6 @@
 export default function (state = [], action) {
     switch (action.type) {
         case 'CREATE_USER':
-            // return {
-            //     ...state,
-            //     user: action.payload
-            // }
             return {
                 ...state.user,
                 isLogin: true,
@@ -32,11 +28,15 @@ export default function (state = [], action) {
             // return null
         case 'SIGN_OUT':
             return action.payload
-        case "EDIT_USER":
-            return {
-                ...state,
-                user: action.payload
-            }
+        case 'USER_UPDATED':
+            return action.payload
+        case 'USER_MOVIES':
+            return action.payload
+        // case "USER_UPDATED":
+        //     return {
+        //         ...state,
+        //         user: action.payload
+        //     }
         default:
             return state;
     }

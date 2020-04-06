@@ -1,40 +1,56 @@
 import React, { Component } from "react"
 import UserDetails from "./UserDetails.js"
-import UserMovies from "../User/UserMovies"
-import UserComments from "./UserComments"
+// import UserMovies from "../User/UserMovies"
+// import UserComments from "./UserComments"
 
-import {fetchUserPage} from '../../actions/usersActions' 
+// import { fetchUserPage } from '../../actions/usersActions' 
 // import "../styles/profile_page.scss"
 
 class UserPage extends Component {
-    constructor(){
-        super()
+    // constructor(){
+    //     super()
 
-        this.state = {
-            user: [],
-            userMovies: [],
-            comments: []
-        }
-    }
+    //     this.state = {
+    //         user: [],
+    //         userMovies: [],
+    //         movieComments: []
+    //     }
+    // }
 
-    componentDidMount(){
-        fetchUserPage()
-    }
+    // componentDidMount(){
+        // fetchUserPage()
+        // fetch(`http://localhost:3001/api/v1/user/${this.profileId}/info`)
+        // .then(resp => resp.json())
+        // .then( data => {
+        //     this.setState({
+        //         user: data.user_info,
+        //         userMovies: data.userMovies,
+        //         movieComments: data.comments
+        //     })
+        // })
+    // }
 
-    render(){
+    render() {
         // let user;
-        // this.props.users.user ? user = this.props.currentUser.user : user = this.props.currentUser
-        
-        // let myComments;
-        // user ? (myComments = this.props.allComments.filter(comm => comm.user_id === user.id)) : (myComments = [])
+        // this.props.users ? user = this.props.users.user : user = this.props.users
+        // this.props.users.user ? user = this.props.users.user : user = this.props.users
+        // user = this.props.users.attributes
+
 
         return (
-            <div className="profile-page-container"> 
-                <UserDetails userObj={this.state.users} />
-                {/* <UserDetails users={user}/> */}
-                <UserMovies userMovies={this.state.userMovies} />
-                {/* <UserComments classes="mycomments four wide column" movieComments={myComments} deleteComment={this.props.handleDeleteComment} mycomments={true} user={user} /> */}
-                <UserComments comments={this.state.comments} />
+            <div className="container">
+                <UserDetails users={this.props.users.user} />
+                {/* <UserDetails user={user} /> */}
+                {/* <UserDetails userObj={this.state.user}/> */}
+                {/* <UserMovies userMovies={this.props.userMovies} /> */}
+                {/* <UserComments movieComments={this.state.userComments} /> */}
+                {/* <UserComments 
+                    classes="mycomments four wide column"
+                    movieComments={userComments}
+                    deleteComment={this.props.fetchleDeleteComment}
+                    mycomments={true}
+                    user={user} /> */}
+                {/* <UserComments comments={this.state.comments} /> */}
             </div>
         )
     }
@@ -61,14 +77,14 @@ export default UserPage
 //     this.props.users.user ? user = this.props.users.user : user = this.props.users
 
 //     let myComments;
-//     user ? (myComments = this.props.allComments.filter(comm => comm.user_id === user.id)) : (myComments = [])
+//     user ? (myComments = this.props.movieComments.filter(comm => comm.user_id === user.id)) : (myComments = [])
 
 //     return (
 //       <div className="Profile">
 //         <Navbar users={this.props.users} signOut={this.props.signOut}/>
 //         <div id="profileCon" className="ui grid">
 //           <UserDetails user={user}/>
-//           <UserMovies myMovieList={this.props.myMovieList} />
+//           <UserMovies userMovies={this.props.userMovies} />
 //           <UserComments classes="mycomments four wide column" movieComments={myComments} deleteComment={this.props.handleDeleteComment} mycomments={true} user={user} />
 //         </div>
 //       </div>

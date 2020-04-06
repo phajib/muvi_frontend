@@ -3,7 +3,9 @@ import Comments from '../Comments/Comments'
 
 const UserComments = (props) => {
     return (
+      <div className="container animated zoomIn">
       <div className={props.classes}>
+        <h3 className="text-success">Your Comments</h3>
         {props.mycomments ? <div className="myCommentsTitle">MY COMMENTS</div> : null}
         {(props.movieComments) && props.movieComments.map(comm =>
             <Comments
@@ -14,6 +16,7 @@ const UserComments = (props) => {
                 user={props.user}
             />
         )}
+      </div>
       </div>
     )
 }

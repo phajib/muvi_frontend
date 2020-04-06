@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Swal from 'sweetalert2'
+// import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 
@@ -27,7 +27,7 @@ export const fetchMovies = text => dispatch => {
 
 export const fetchMovie = id => dispatch => {
   axios.get(`${HOST_URL}/movie/${id}`)
-  // fetch(`${HOST_URL}/movie/${tmdb_id}`)
+  // fetch(`${HOST_URL}/movie/${id}`)
     // .then(res => res.json())
     .then(response => {
       dispatch({ type: 'FETCH_MOVIE', payload: response.data })
@@ -76,53 +76,53 @@ export const fetchLatest = () => {
 }
 
 // need to adjust still
-export const userMovies = (user) => dispatch => {
-  axios.post(`${HOST_URL}/usermovies`)
-    .then(response =>
-      dispatch({ type: 'USER_MOVIES',payload: response.data })
-    )
-    .catch(err => console.log(err));
-};
+// export const userMovies = (user) => dispatch => {
+//   axios.post(`${HOST_URL}/usermovies`)
+//     .then(response =>
+//       dispatch({ type: 'USER_MOVIES',payload: response.data })
+//     )
+//     .catch(err => console.log(err));
+// };
 
-export const addToList = (movieObj, users) => {
-  fetch(`${HOST_URL}/usermovies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-    }, 
-    body: JSON.stringify({
-      movie: movieObj,
-      user: users
-    })
-  })
-  .then(resp => resp.json())
-  .then(data => {
-    switch(data.message) {
-        case "Already Liked!":
-            Swal.fire({
-                title: 'Already Liked!',
-                text: 'Time to watch more movies!',
-                icon: 'error',
-                confirmButtonText: 'Back'
-            })
-            break;
-        case "Please log in":
-            Swal.fire({
-                title: `${data.message}`,
-                text: 'Login or Signup',
-                icon: 'error',
-                confirmButtonText: 'Back'
-            })
-            break;
-        default:
-            Swal.fire({
-                title: 'Added!',
-                text: `${data.title} Movie saved`,
-                icon: 'success',
-                confirmButtonText: 'OK'
-            })
-    }
-})
-}
+// export const addToList = (movieObj) => {
+//   fetch(`${HOST_URL}/usermovies`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+//     }, 
+//     body: JSON.stringify({
+//       movie: movieObj,
+//       user: movieObj.users
+//     })
+//   })
+//   .then(resp => resp.json())
+//   .then(data => {
+//     switch(data.message) {
+//         case "Already Liked!":
+//             Swal.fire({
+//                 title: 'Already Liked!',
+//                 text: 'Time to watch more movies!',
+//                 icon: 'error',
+//                 confirmButtonText: 'Back'
+//             })
+//             break;
+//         case "Please log in":
+//             Swal.fire({
+//                 title: `${data.message}`,
+//                 text: 'Login or Signup',
+//                 icon: 'error',
+//                 confirmButtonText: 'Back'
+//             })
+//             break;
+//         default:
+//             Swal.fire({
+//                 title: 'Added!',
+//                 text: `${data.title} Movie saved`,
+//                 icon: 'success',
+//                 confirmButtonText: 'OK'
+//             })
+//     }
+// })
+// }

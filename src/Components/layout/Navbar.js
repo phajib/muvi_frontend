@@ -15,8 +15,8 @@ class Navbar extends Component {
                 MUVI
               </Link>
             </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
 
             {!Array.isArray(this.props.users) ? (
@@ -26,16 +26,19 @@ class Navbar extends Component {
               </Link>
             ) : null}
 
-            <div class="collapse navbar-collapse" id="navbarText">
+            <div className="collapse navbar-collapse" id="navbarText">
               <ul className="navbar-nav ml-auto text-light d-inline-block">
                 <li className="nav-item dropdown d-inline-block mr-4 animated jackInTheBox">
                   {/* eslint-disable-next-line */}
-                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    <Link className="navbar-brand text-white text-lg" to="/movies">
+                  {/* <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> */}
+                    <Link className="nav-link dropdown-toggle navbar-brand text-white text-lg"
+                      data-toggle="dropdown"
+                      id="navbardrop"
+                      to="/movies">
                       Movies
                     </Link>
-                  </a>
-                  <div class="dropdown-menu bg-secondary">
+                  {/* </a> */}
+                  <div className="dropdown-menu bg-secondary">
                     <Link className="dropdown-item navbar-brand text-white text-sm" to="/popular/1">
                       Popular Movies
                     </Link>
@@ -52,21 +55,28 @@ class Navbar extends Component {
                 </li>
                 <li className="nav-item d-inline-block mr-4">
                   {/* eslint-disable-next-line */}
-                  <a className="nav-item">
-                    <Link className="navbar-brand text-white text-lg" to="/about">
+                  {/* <a className="nav-item"> */}
+                    <Link
+                    className=" nav-item navbar-brand text-white text-lg"
+                    to="/about">
                       About
                     </Link>
-                  </a>
+                  {/* </a> */}
                 </li>
                 <li className="nav-item d-inline-block mr-4">
                   {!Array.isArray(this.props.users) ? (
                     // eslint-disable-next-line 
-                    <button onClick={() => this.props.signOut()} className="nav-link btn btn-outline-success text-white btn-lg">
+                    <Link 
+                      className="nav-link btn btn-outline-success text-white btn-lg"
+                      to="/signout"
+                      onClick={() => {
+                        this.props.signOut()}
+                      }
+                    >
                       Log Out
-                    </button>
+                    </Link>
                   ) : (
-                    <Link
-                      className="btn btn-outline-success text-white btn-lg" to="/login">
+                    <Link className="btn btn-outline-success text-white btn-lg" to="/login">
                         Login
                     </Link>
                   )}

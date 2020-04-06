@@ -1,19 +1,56 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { addToList } from '../../actions/movieActions'
 
+// import Comments from '../Comments/Comments'
 import CommentForm from '../Comments/CommentForm'
 // import MovieComments from '../Movie/MovieComments'
 
 import { fetchMovie, setLoading } from '../../actions/movieActions'
-// import Swal from 'sweetalert2'
+// import { deleteComment } from '../../actions/commentActions'
+
+import Swal from 'sweetalert2'
 import Spinner from '../layout/Spinner'
 // debugger
 export class Movie extends Component {
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
     this.props.setLoading();
+    // this.props.fetchMovieComments(this.props.match.params.id);
+  }
+
+  addToList = (movie) => {
+    fetch(`http://localhost:3001/api/v1/usermovies`, {
+      method: 'POST',
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+        "Content-Type": 'application/json',
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({
+        movie: movie,
+        user: this.props.users
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      if (data.title) {
+        this.setState(mov => { 
+          return {userMovies: [...mov.userMovies, data]}}) }
+      data.message ? (
+        Swal.fire({
+          icon: 'success',
+          title: 'Unable to Add',
+          text: `${data.message}`
+      })
+      ) : (
+        Swal.fire({
+          icon: 'success',
+          title: 'Added',
+          text: `${data.title} has been added!`
+        })
+      )
+    })
   }
 
   render() {
@@ -35,7 +72,7 @@ export class Movie extends Component {
                   <strong>Overview:</strong> {movie.overview}
                   <h3 className="text-white">{movie.tagline}</h3>
                   <div className="container">
-                    <button onClick={() => {addToList(movie, this.props.users)} } to='/movies' className="btn btn-success btn-sm">
+                    <button onClick={() => {this.addToList(this.props.movie)} } to='/movies' className="btn btn-success btn-sm">
                       Save Movie
                     </button>
                   </div>
@@ -53,17 +90,34 @@ export class Movie extends Component {
                     href={'https://www.imdb.com/title/' + movie.imdb_id}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-success"
+                    className="btn btn-outline-success btn-sm"
                   >
                     View on IMDB
                   </a>
-                  <Link to="/" className="btn btn-default text-success">
+                  <Link to="/" className="btn btn-default btn-sm text-success">
                     Go Back To Search
                   </Link>
                 </li>
                 <li>
-                  <CommentForm movie={this.props.movie} newCommentAdded={this.props.newCommentAdded} addComment={this.props.addComment} />
-                  {/* <MovieComments movieComments={this.props.movieComments} deleteComment={this.props.deleteComment} classes="" mycomments={false} user={this.props.user}/> */}
+                  <CommentForm
+                    movie={this.props.movie}
+                    newCommentAdded={this.props.newCommentAdded}
+                    addComment={this.props.addComment}
+                  />
+                  {/* <div className="container">
+                    {userMovies.length === 0 ? 
+                      <h3>No comments have been made, yet!</h3>
+                    : ( userMovies.map(comments => {
+                      return <Comments key={comments.id} comments={comments} deleteComment={this.deleteComment} />
+                      })
+                    )}
+                  </div> */}
+                  {/* <MovieComments
+                    movieComments={this.props.movieComments}
+                    deleteComment={this.props.deleteComment}
+                    classes="" mycomments={false}
+                    user={this.props.users} */}
+                  />
                 </li>
               </ul>
             </div>
@@ -73,6 +127,7 @@ export class Movie extends Component {
     );
 
     let content = loading ? <Spinner /> : movieInfo;
+    console.log(this.props.movies)
     return <div>{content}</div>;
   }
 }
