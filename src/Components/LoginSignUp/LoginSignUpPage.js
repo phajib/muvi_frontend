@@ -29,7 +29,7 @@ class LoginPage extends Component {
         event.preventDefault();
         this.props.logIn(userInfo)      //logIn ACTION
     }
-    
+
     render(){
         return(
             <div className="login-page-container">

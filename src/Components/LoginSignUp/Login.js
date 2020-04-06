@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment, Icon } from 'semantic-ui-react'
 
 class Login extends Component {
     constructor() {
@@ -22,9 +22,10 @@ class Login extends Component {
             <div className='animated bounceIn'>
                 <Grid textAlign='center' style={{ height: '78vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 500 }}>
+                    <Icon name='address card' size='big' color='green' icon='address card' />
                         <Header as='h2' color='green' textAlign='center'>
-                            <Image src='https://media1.giphy.com/media/dPXxkfC3UKvbG/giphy.gif' /> Log-in to your account
-                            </Header>
+                            Log-in to your account
+                        </Header>
                         <Form size='large'>
                             <Segment stacked>
                                 <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
