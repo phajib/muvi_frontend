@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-// eslint-disable-next-line
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 import './App.css';
@@ -20,22 +19,22 @@ import LatestMovies from './Components/Home/LatestMovies'
 
 import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest } from './actions/movieActions'
 import { checkUser } from './actions//usersActions'
+// import { fetchComments } from './actions/commentActions'
 // import Login from './Components/LoginSignUp/Login';
 
-
-// debugger
 class App extends Component {
   componentDidMount() {
     this.props.fetchTopRated()
     this.props.fetchUpcoming()
     this.props.fetchPopular()
     this.props.fetchLatest()
+    // this.props.addToList()
+    // this.props.fetchComments()
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
     }
   }
-  
   render() {
     return (
       <div className="App bg-dark">
@@ -43,45 +42,28 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Landing} />
           <Route exact path="/movies" component={Landing} />
-          {/* < Route exact path="/movie/:id" render={(props) => {
-            let movie_id = props.match.params.id 
-             return  <Movie movieID={movie_id} /> 
-          }}/> */}
           <Route exact path="/movie/:id" component={Movie} />
 
-          <Route exact path='/profile' component={UserPage} />
-          {/* < Route exact path="/profile" render={() => {
-              return this.state.users === 0 ?
-              <Redirect to="/login"/> : <UserPage users={this.state.users} />
-          }}/> */}
-          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
-
-          < Route exact path="/profile/edit" component={() => {
-              return this.props.users.length === 0 ? < Redirect to="/login"/> : <UserEdit />
-          }}/>
-
-          {/* < Route exact path='/login' component={LoginSignUpPage} /> */}
-          < Route exact path="/login" render={() => {
-            return this.props.users.length === 0 ? < LoginSignUpPage /> : < Redirect to="/"/>
-          }}/>
-
-          < Route exact path="/user/:id" render={(props) => {
-            let profileId = props.match.params.id
-            let userId = this.props.users.id
-            return (userId === parseInt(profileId)) ? <UserPage /> : <UserPage profileId={profileId} />
-          }} />
-          
+          {/* <Route exact path='/profile' component={UserPage} /> */}
           <Route exact path="/profile" render={() => {
-            return this.state.currentUser.length === 0 ? <Redirect to="/login"/> :
-            <UserPage
-              currentUser={this.state.currentUser} 
-              myMovieList={this.state.userMovies}
-              allComments={this.state.allComments}
-              handleDeleteComment={this.handleDeleteComment}
-              signOut={this.signOut}
-            />
+            // console.log(this.props.users.attributes)
+            // console.log(this.props.movies)
+              return this.props.users.length === 0 ?
+              <Redirect to="/login"/> : <UserPage users={this.props.users} userMovies={this.props.userMovies}  />
           }}/>
 
+          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
+          <Route exact path="/profile/edit" component={() => {
+              return this.props.users.length === 0 ?
+              < Redirect to="/login"/> : <UserEdit />
+          }}/>
+
+          <Route exact path="/login" render={() => {
+            return this.props.users.length === 0 ?
+            < LoginSignUpPage /> : < Redirect to="/"/>
+          }}/>
+
+          <Route exact path="/signout" component={Landing} />
           <Route exact path="/popular/1" component={PopularMovies} />
           <Route exact path="/upcoming" component={UpcomingMovies} />
           <Route exact path="/top_rated" component={TopRatedMovies} />
@@ -100,7 +82,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchUpcoming: () => {dispatch(fetchUpcoming())},
     fetchTopRated: () => {dispatch(fetchTopRated())},
     fetchLatest: () => {dispatch(fetchLatest())},
-    checkUser: () => {dispatch(checkUser())}
+    // fetchComments: () => {dispatch(fetchComments())},
+    checkUser: () => {dispatch(checkUser())},
+    // addToList: () => {dispatch(addToList())}
   }
 }
 
