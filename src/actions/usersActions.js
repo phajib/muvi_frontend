@@ -58,7 +58,7 @@ export const logIn = (userInfo) => {
       console.log(data)
       if (data.message === "Invalid username or password") {
         Swal.fire({
-          title: 'Unable to Login!',
+          title: 'Login ERROR!',
           text: `${data.message}`,
           icon: 'error',
           confirmButtonText: 'Back'
@@ -73,8 +73,8 @@ export const logIn = (userInfo) => {
   }
 }
 
-// export const setCurrentUser = (users) => {
-//   return {type: "CURRENT_USER", payload: users}
+// export const setCurrentUser = (user) => {
+//   return {type: "CURRENT_USER", payload: user}
 // }
 
 export const signOut = () => {
@@ -83,7 +83,6 @@ export const signOut = () => {
 }
 
 export const checkUser = () => {
-  // return (dispatch) => {
   if (localStorage.getItem('jwt')){
     return (dispatch) => {
       fetch(`${HOST_URL}/profile`, {
@@ -93,65 +92,80 @@ export const checkUser = () => {
       })
       .then(res => res.json())
       .then(user => {
-        dispatch({type: 'CURRENT_USER', payload: user})
+        dispatch({type: 'CURRENT_USER', payload: user.user}) //added user
       })
     }
   }
 }
 
+export const userUpdate = (updatedUser) => {
+  return {type: "USER_UPDATED", payload: updatedUser}
+}
+
 // export const updateUser = (updatedUser) => {
-//   return {type: "USER_UPDATED", payload: updatedUser}
+//   return (dispatch) => {
+//   fetch('http://localhost:3001/api/v1/user/edit', {
+//     method: "PATCH",
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Accept': 'application/json',
+//       "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+//     },
+//     body: JSON.stringify({
+//       user: {
+//         username: updatedUser.username,
+//         password: updatedUser.password,
+//         about: updatedUser.about,
+//         picture_profile: updatedUser.profile_picture
+//       }
+//     })
+//   })
+//   .then(resp => resp.json())
+//   .then(updatedProfile => {
+//     updateUser(updatedProfile)
+//     Swal.fire({
+//       title: 'Profile Updated',
+//       text: `Your profile has been updated!`,
+//       icon: 'success',
+//       confirmButtonText: 'Go to Profile',
+//     }).then(function () {
+//       window.history.back();
+//     })
+//   })
+//   .then(data => {
+//     dispatch({type: 'USER_UPDATED', payload: data.users})
+//     localStorage.setItem("jwt", data.jwt)
+//   })
+//   .catch(err => console.log(err))
+//  }
 // }
 
-export const updateUser = (updatedUser) => {
+export const userData = () => {
   return (dispatch) => {
-  fetch('http://localhost:3001/api/v1/user/edit', {
-    method: "PATCH",
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-    },
-    body: JSON.stringify({
-      user: {
-        username: updatedUser.username,
-        password: updatedUser.password,
-        about: updatedUser.about,
-        picture_profile: updatedUser.profile_picture
-      }
-    })
-  })
-  .then(resp => resp.json())
-  .then(updatedProfile => {
-    updateUser(updatedProfile)
-    Swal.fire({
-      title: 'Profile Updated',
-      text: `Your profile has been updated!`,
-      icon: 'success',
-      confirmButtonText: 'Go to Profile',
-    }).then(function () {
-      window.history.back();
-    })
-  })
-  .then(data => {
-    dispatch({type: 'USER_UPDATED', payload: data.updatedUser})
-    localStorage.setItem("jwt", data.jwt)
-  })
-  .catch(err => console.log(err))
- }
+      fetch(`${HOST_URL}/user/all_info`,{
+          headers: {
+              "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+          }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+          dispatch({type: 'USER_MOVIES', payload: data.savedMovies})
+          // dispatch(userMovies(data.likedGames))
+      })
+  }
 }
 
-export const fetchUserPage = () => {
-  fetch(`${HOST_URL}/user/${this.profileId}/info`)
-  .then(resp => resp.json())
-  .then( data => {
-    this.setState({
-      user: data.user_info,
-      userMovies: data.userMovies,
-      movieComments: data.comments
-    })
-  })
-}
+// export const fetchUserPage = () => {
+//   fetch(`${HOST_URL}/user/${this.profileId}/info`)
+//   .then(resp => resp.json())
+//   .then( data => {
+//     this.setState({
+//       user: data.user_info,
+//       userMovies: data.userMovies,
+//       movieComments: data.comments
+//     })
+//   })
+// }
 
 // export const userMovies = (user) => dispatch => {
 //   axios.post(`${HOST_URL}/usermovies`)
@@ -161,13 +175,13 @@ export const fetchUserPage = () => {
 //     .catch(err => console.log(err));
 // };
 
-export const userMovies = (user) => {
-  return (dispatch) => {
-    fetch(`${HOST_URL}/usermovies`)
-    .then(resp => resp.json())
-    .then(response => {
-      dispatch({ type: 'USER_MOVIES', payload: response.data })
-    })
-    .catch(err => console.log(err))
-  }
-}
+// export const userMovies = (user) => {
+//   return (dispatch) => {
+//     fetch(`${HOST_URL}/usermovies`)
+//     .then(resp => resp.json())
+//     .then(response => {
+//       dispatch({ type: 'USER_MOVIES', payload: response.data })
+//     })
+//     .catch(err => console.log(err))
+//   }
+// }

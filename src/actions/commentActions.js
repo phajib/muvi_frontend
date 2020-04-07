@@ -45,38 +45,38 @@ export const fetchMovieComments = (tmdb_id) => {
 // }
 
 
-export const fetchNewComment = dispatch => {
-    fetch(`${HOST_URL}/comments`, {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json", 
-            "Accept": "application/json",
-            "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-        },
-        body: JSON.stringify({
-            content: this.state.content,
-            tmdb_id: this.props.tmdb_id,
-        })
-    })
-    .then(resp => resp.json())
-    .then(newComment => {
-        if (newComment.message) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Unable to Add',
-                text: `${newComment.message}`,
-            })
-        } else {
-            console.log(newComment)
-            this.props.newCommentAdded(newComment)
-            this.props.addComment(newComment)
-        }
-    })
-    .then(response => {
-        dispatch({ type: 'NEW_COMMENT', payload: response.data })
-    })
-    .catch(err => console.log(err));
-}
+// export const fetchNewComment = dispatch => {
+//     fetch(`${HOST_URL}/comments`, {
+//         method: 'POST',
+//         headers: {
+//             "Content-Type": "application/json", 
+//             "Accept": "application/json",
+//             "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+//         },
+//         body: JSON.stringify({
+//             content: content,
+//             tmdb_id: tmdb_id,
+//         })
+//     })
+//     .then(resp => resp.json())
+//     .then(newComment => {
+//         if (newComment.message) {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Unable to Add',
+//                 text: `${newComment.message}`,
+//             })
+//         } else {
+//             console.log(newComment)
+//             this.props.newCommentAdded(newComment)
+//             this.props.addComment(newComment)
+//         }
+//     })
+//     .then(response => {
+//         dispatch({ type: 'NEW_COMMENT', payload: response.data })
+//     })
+//     .catch(err => console.log(err));
+// }
     
     
 //     axios.post(`${HOST_URL}/comments`)

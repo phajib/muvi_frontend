@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 
@@ -75,54 +75,38 @@ export const fetchLatest = () => {
   }
 }
 
-// need to adjust still
-// export const userMovies = (user) => dispatch => {
-//   axios.post(`${HOST_URL}/usermovies`)
-//     .then(response =>
-//       dispatch({ type: 'USER_MOVIES',payload: response.data })
-//     )
-//     .catch(err => console.log(err));
-// };
-
-// export const addToList = (movieObj) => {
-//   fetch(`${HOST_URL}/usermovies`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json',
-//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-//     }, 
-//     body: JSON.stringify({
-//       movie: movieObj,
-//       user: movieObj.users
-//     })
-//   })
-//   .then(resp => resp.json())
-//   .then(data => {
-//     switch(data.message) {
-//         case "Already Liked!":
-//             Swal.fire({
-//                 title: 'Already Liked!',
-//                 text: 'Time to watch more movies!',
-//                 icon: 'error',
-//                 confirmButtonText: 'Back'
-//             })
-//             break;
-//         case "Please log in":
-//             Swal.fire({
-//                 title: `${data.message}`,
-//                 text: 'Login or Signup',
-//                 icon: 'error',
-//                 confirmButtonText: 'Back'
-//             })
-//             break;
-//         default:
-//             Swal.fire({
-//                 title: 'Added!',
-//                 text: `${data.title} Movie saved`,
-//                 icon: 'success',
-//                 confirmButtonText: 'OK'
-//             })
-//     }
-// })
-// }
+export const addToList = (movieObj, users) => dispatch => {
+  fetch(`${HOST_URL}/usermovies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+    }, 
+    body: JSON.stringify({
+      movie: movieObj,
+      user: users
+    })
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    if (data.original_title) {
+      this.setState(mov => { 
+        return {userMovies: [...mov.userMovies, data]}}) }
+      data.message ? (
+      Swal.fire({
+        icon: 'error',
+        title: 'Unable to Add',
+        text: `${data.message}`
+      })
+      ) : (
+      Swal.fire({
+        icon: 'success',
+        title: 'Added',
+        text: `${data.original_title} has been added!`
+      })
+    )
+    dispatch({type: 'SAVED_MOVIE', payload: data.movieObj})
+    localStorage.setItem("jwt", data.jwt)
+  })
+}
