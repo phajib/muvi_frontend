@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // import Comments from '../Comments/Comments'
-import CommentForm from '../Comments/CommentForm'
-// import MovieComments from '../Movie/MovieComments'
+// eslint-disable-next-line
+import CommentsContainer from '../Comments/CommentsContainer'
 
+// eslint-disable-next-line
+// import MovieComments from '../Movie/MovieComments'
 import { fetchMovie, setLoading } from '../../actions/movieActions'
 // import { deleteComment } from '../../actions/commentActions'
 
@@ -13,33 +15,45 @@ import Swal from 'sweetalert2'
 import Spinner from '../layout/Spinner'
 // debugger
 export class Movie extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      showMovie: {}
+    }
+  }
+
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
     this.props.setLoading();
+    // this.setState({ showMovie: this.props.movie });
     // this.props.fetchMovieComments(this.props.match.params.id);
   }
 
-  addToList = (movie) => {
+  // saveMovie = (movieObj, user) => {
+  //   this.props.addToList(movieObj, user)
+  // }
+  addToList = (movieObj) => {
     fetch(`http://localhost:3001/api/v1/usermovies`, {
       method: 'POST',
       headers: {
-        "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
         "Content-Type": 'application/json',
-        "Accept": 'application/json'
+        "Accept": 'application/json',
+        "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
       },
       body: JSON.stringify({
-        movie: movie,
+        movie: movieObj,
         user: this.props.users
       })
     })
     .then(resp => resp.json())
     .then(data => {
-      if (data.title) {
-        this.setState(mov => { 
-          return {userMovies: [...mov.userMovies, data]}}) }
+      if (data.original_title) {
+        this.setState(mov => {
+          return {myMovies: [...mov.myMovies, data]}}) }
       data.message ? (
         Swal.fire({
-          icon: 'success',
+          icon: 'error',
           title: 'Unable to Add',
           text: `${data.message}`
       })
@@ -47,7 +61,7 @@ export class Movie extends Component {
         Swal.fire({
           icon: 'success',
           title: 'Added',
-          text: `${data.title} has been added!`
+          text: `${data.original_title} has been added!`
         })
       )
     })
@@ -99,11 +113,10 @@ export class Movie extends Component {
                   </Link>
                 </li>
                 <li>
-                  <CommentForm
-                    movie={this.props.movie}
+                  <CommentsContainer showMovie={this.props.movie} />
+                    {/* movie={this.props.movie}
                     newCommentAdded={this.props.newCommentAdded}
-                    addComment={this.props.addComment}
-                  />
+                    addComment={this.props.addComment} */}
                   {/* <div className="container">
                     {userMovies.length === 0 ? 
                       <h3>No comments have been made, yet!</h3>
