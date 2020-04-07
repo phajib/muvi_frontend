@@ -1,46 +1,13 @@
-// import React, { Component } from 'react'
-// import {Link} from 'react-router-dom'
-
-// // const UserDetails = (props) => {
-// class UserDetails extends Component {
-//     render(){
-//         // if(props.users){
-//         const {username, about, profile_picture} = this.props.users
-//         return (
-//             <div className="container animated zoomIn">
-//                 <h3 className="text-success">Your Details</h3>
-//             {console.log(this.props.users)}
-//                 <div className="container">
-//                     <img className="container" alt={profile_picture} src={`${profile_picture}`}></img>
-//                 </div>
-
-//                 <div className="container">
-//                     <h1>{username}</h1>
-//                     <p className="about">{about}</p>
-//                 </div>
-//                 <div className="container">
-//                     <button className="button is-light">
-//                         <Link to="/profile/edit">Edit Profile</Link>
-//                     </button>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
-
-// export default UserDetails
-
-
 import React, {Component} from 'react';
 
 import { Link } from 'react-router-dom'
 
 // const UserDetails = (props) => {
+// debugger
 class UserDetails extends Component {
     render() {
 //   if (props.user) {
-    // const { username, about, profile_picture } = props.user
-    let { username, about, profile_picture } = this.props.users
+    let { username, about, profile_picture } = this.props.users.data.attributes
 
     return (
         <div className="container">

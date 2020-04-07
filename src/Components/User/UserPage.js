@@ -1,34 +1,35 @@
 import React, { Component } from "react"
+import { connect } from 'react-redux'
 import UserDetails from "./UserDetails.js"
-// import UserMovies from "../User/UserMovies"
-// import UserComments from "./UserComments"
+import UserMovies from "../User/UserMovies"
+import UserComments from "./UserComments"
 
 // import { fetchUserPage } from '../../actions/usersActions' 
 // import "../styles/profile_page.scss"
 
 class UserPage extends Component {
-    // constructor(){
-    //     super()
+    constructor(){
+        super()
 
-    //     this.state = {
-    //         user: [],
-    //         userMovies: [],
-    //         movieComments: []
-    //     }
-    // }
+        this.state = {
+            user: [],
+            savedMovies: [],
+            userComments: []
+        }
+    }
 
-    // componentDidMount(){
+    componentDidMount(){
         // fetchUserPage()
-        // fetch(`http://localhost:3001/api/v1/user/${this.profileId}/info`)
-        // .then(resp => resp.json())
-        // .then( data => {
-        //     this.setState({
-        //         user: data.user_info,
-        //         userMovies: data.userMovies,
-        //         movieComments: data.comments
-        //     })
-        // })
-    // }
+        fetch(`http://localhost:3001/api/v1/user/${this.props.users.id}/info`)
+        .then(resp => resp.json())
+        .then( data => {
+            this.setState({
+                user: data.user_info,
+                savedMovies: data.savedMovies,
+                userComments: data.userComments
+            })
+        })
+    }
 
     render() {
         // let user;
@@ -39,24 +40,26 @@ class UserPage extends Component {
 
         return (
             <div className="container">
-                <UserDetails users={this.props.users.user} />
-                {/* <UserDetails user={user} /> */}
-                {/* <UserDetails userObj={this.state.user}/> */}
-                {/* <UserMovies userMovies={this.props.userMovies} /> */}
-                {/* <UserComments movieComments={this.state.userComments} /> */}
-                {/* <UserComments 
-                    classes="mycomments four wide column"
-                    movieComments={userComments}
-                    deleteComment={this.props.fetchleDeleteComment}
-                    mycomments={true}
-                    user={user} /> */}
-                {/* <UserComments comments={this.state.comments} /> */}
+                <div className="row">
+                    <UserDetails users={this.props.users} />
+                    {/* <UserDetails user={user} /> */}
+                    {/* <UserMovies /> */}
+                    <UserMovies savedMovies={this.state.savedMovies} />
+                    {/* <UserMovies userMovies={this.props.userMovies} /> */}
+                    {/* <UserComments comments={this.state.comments} /> */}
+                </div>
             </div>
         )
     }
 }
 
-export default UserPage
+const mapStateToProps = state => {
+    return {
+        users: state.users
+    }
+}
+
+export default connect(mapStateToProps, null)(UserPage)
 
 
 
@@ -77,7 +80,7 @@ export default UserPage
 //     this.props.users.user ? user = this.props.users.user : user = this.props.users
 
 //     let myComments;
-//     user ? (myComments = this.props.movieComments.filter(comm => comm.user_id === user.id)) : (myComments = [])
+//     user ? (myComments = this.props.userComments.filter(comm => comm.user_id === user.id)) : (myComments = [])
 
 //     return (
 //       <div className="Profile">
@@ -85,7 +88,7 @@ export default UserPage
 //         <div id="profileCon" className="ui grid">
 //           <UserDetails user={user}/>
 //           <UserMovies userMovies={this.props.userMovies} />
-//           <UserComments classes="mycomments four wide column" movieComments={myComments} deleteComment={this.props.handleDeleteComment} mycomments={true} user={user} />
+//           <UserComments classes="mycomments four wide column" userComments={myComments} deleteComment={this.props.handleDeleteComment} mycomments={true} user={user} />
 //         </div>
 //       </div>
 //     )
