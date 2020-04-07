@@ -28,8 +28,6 @@ class App extends Component {
     this.props.fetchUpcoming()
     this.props.fetchPopular()
     this.props.fetchLatest()
-    // this.props.addToList()
-    // this.props.fetchComments()
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
@@ -43,16 +41,17 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/movies" component={Landing} />
           <Route exact path="/movie/:id" component={Movie} />
+          {/* <Route exact path="/movie/:id" render={() => {
+            return <Movie users={this.state.users} />
+          }} /> */}
 
           {/* <Route exact path='/profile' component={UserPage} /> */}
           <Route exact path="/profile" render={() => {
-            // console.log(this.props.users.attributes)
-            // console.log(this.props.movies)
               return this.props.users.length === 0 ?
-              <Redirect to="/login"/> : <UserPage users={this.props.users} userMovies={this.props.userMovies}  />
-          }}/>
+              <Redirect to="/login"/> : <UserPage />
+              // <Redirect to="/login"/> : <UserPage users={this.state.users} userMovies={this.props.userMovies} />
+           }}/>
 
-          {/* < Route exact path='/profile/edit' component={UserEdit} /> */}
           <Route exact path="/profile/edit" component={() => {
               return this.props.users.length === 0 ?
               < Redirect to="/login"/> : <UserEdit />
@@ -84,7 +83,6 @@ const mapDispatchToProps = (dispatch) => {
     fetchLatest: () => {dispatch(fetchLatest())},
     // fetchComments: () => {dispatch(fetchComments())},
     checkUser: () => {dispatch(checkUser())},
-    // addToList: () => {dispatch(addToList())}
   }
 }
 
