@@ -1,24 +1,63 @@
-import React from 'react';
+import React from "react" 
 import Comments from '../Comments/Comments'
 
-const UserComments = (props) => {
-    return (
-      <div className="container animated zoomIn">
-      <div className={props.classes}>
-        <h3 className="text-success">Your Comments</h3>
-        {props.mycomments ? <div className="myCommentsTitle">MY COMMENTS</div> : null}
-        {(props.movieComments) && props.movieComments.map(comm =>
-            <Comments
-                key={comm.id}
-                comment={comm}
-                deleteComment={props.deleteComment}
-                mycomments={props.mycomments}
-                user={props.user}
-            />
-        )}
-      </div>
-      </div>
-    )
+class UserComments extends React.Component {
+    constructor(){
+        super()
+
+        this.state = {
+            userComments: []
+        }
+    }
+
+    componentDidMount(){
+        fetch('http://localhost:3001/api/v1/comments', {
+            headers: {
+                "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(resp => resp.json())
+        .then(comms => {
+            this.setState({userComments: comms})
+        })
+    }
+
+    removeComment = (commId) => {
+        fetch(`http://localhost:3001/api/v1/comments/${commId}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+        .then(resp => resp.json())
+        .then( comm => {
+            this.newComments(comm)
+        })
+    }
+
+    newComments = (comm) => {
+        let filterComments = this.state.userComments.filter(userComm => {
+            return userComm.id !== comm.id
+        })
+
+        this.setState({
+            userComments: filterComments
+        })
+    }
+
+
+    render(){
+        return (
+            <div className="container animated zoomIn"> 
+                <h1 className="text-success">Comments</h1>
+                <div className="container">
+                    {this.state.userComments.map(comment => {
+                        return <Comments key={comment.id} postObject={comment} removeComment={this.removeComment} />
+                    })}
+                </div>
+            </div>
+        )
+    }
 }
 
 export default UserComments
