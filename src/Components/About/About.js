@@ -12,7 +12,7 @@ function About() {
                                 width="240" height = "100"
                             />
                         </div>
-                        <div className="api-text">
+                        <div className="text-success">
                             The Movie DB API was utilized in creating the movie data for MUVI. Muvi is not endorsed or certified by TMDB.
                         </div>
                     </div>
@@ -37,7 +37,7 @@ function About() {
                             />
                         </div>
 
-                        <div className="buld-text-container">
+                        <div className="text-white">
                            Ruby on Rails was used in creating the api for Muvi.
                            React and Redux was user in creating the frontend.
                         </div>
