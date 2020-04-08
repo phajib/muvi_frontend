@@ -2,13 +2,10 @@ import React, {Component} from 'react';
 
 import { Link } from 'react-router-dom'
 
-// const UserDetails = (props) => {
-// debugger
 class UserDetails extends Component {
     render() {
-//   if (props.user) {
     let { username, about, profile_picture } = this.props.users.data.attributes
-
+    // let { username, about, profile_picture } = this.props.users.data
     return (
         <div className="container">
             <div className="row animated fadeIn">
@@ -24,7 +21,6 @@ class UserDetails extends Component {
                 </div>
             </div>
         </div>
-    // )} else {return null}
     )}
 }
 

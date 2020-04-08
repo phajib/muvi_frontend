@@ -7,7 +7,7 @@ import { signOut } from './../../actions/usersActions'
 class Navbar extends Component {
   render () {
     return (
-      <div className="">
+      <div>
         <nav className="navbar navbar-expand-sm navbar-light bg-secondary mb-5 sticky-top">
           <div className="container">
             <div className="navbar-header animated jackInTheBox">
@@ -21,7 +21,7 @@ class Navbar extends Component {
 
             {!Array.isArray(this.props.users) ? (
               <Link className="navbar-brand nav-link text-white" to="/profile">
-                {/* {this.props.users.user.data.attributes.username}'s Profile */}
+                {/* {this.props.users.data.attributes.username}'s Profile */}
                 Profile
               </Link>
             ) : null}

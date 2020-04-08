@@ -17,10 +17,9 @@ import UpcomingMovies from './Components/Home/UpcomingMovies'
 import PopularMovies from './Components/Home/PopularMovies'
 import LatestMovies from './Components/Home/LatestMovies'
 
-import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest } from './actions/movieActions'
-import { checkUser } from './actions//usersActions'
-// import { fetchComments } from './actions/commentActions'
-// import Login from './Components/LoginSignUp/Login';
+import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest  } from './actions/movieActions'
+// eslint-disable-next-line
+import { checkUser, fetchUserMovies } from './actions//usersActions'
 
 class App extends Component {
   componentDidMount() {
@@ -31,8 +30,10 @@ class App extends Component {
 
     if (localStorage.getItem('jwt')){
       this.props.checkUser()
+      // this.props.fetchUserMovies(this.props.users)
     }
   }
+
   render() {
     return (
       <div className="App bg-dark">
@@ -45,18 +46,18 @@ class App extends Component {
             return <Movie users={this.state.users} />
           }} /> */}
 
-          {/* <Route exact path='/profile' component={UserPage} /> */}
+          {/* <Route exact path="/profile" component={UserPage} /> */}
           <Route exact path="/profile" render={() => {
               return this.props.users.length === 0 ?
-              <Redirect to="/login"/> : <UserPage />
-              // <Redirect to="/login"/> : <UserPage users={this.state.users} userMovies={this.props.userMovies} />
+              // <Redirect to="/login"/> : <UserPage />
+              <Redirect to="/login"/> : <UserPage users={this.props.users} userMovies={this.props.fetchUserMovies} />
            }}/>
-
-          <Route exact path="/profile/edit" component={() => {
+           {/* <Route exact path="/profile/edit" component={UserEdit} /> */}
+          <Route exact path="/profile/edit" render={() => {
               return this.props.users.length === 0 ?
               < Redirect to="/login"/> : <UserEdit />
           }}/>
-
+          {/* <Route exact path="/login" component={LoginSignUpPage} /> */}
           <Route exact path="/login" render={() => {
             return this.props.users.length === 0 ?
             < LoginSignUpPage /> : < Redirect to="/"/>
@@ -81,8 +82,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchUpcoming: () => {dispatch(fetchUpcoming())},
     fetchTopRated: () => {dispatch(fetchTopRated())},
     fetchLatest: () => {dispatch(fetchLatest())},
-    // fetchComments: () => {dispatch(fetchComments())},
     checkUser: () => {dispatch(checkUser())},
+    fetchUserMovies: () => {dispatch(fetchUserMovies())},
   }
 }
 
