@@ -21,9 +21,9 @@ class UserEdit extends Component {
 
     componentDidMount(){
         this.setState({
-            username: this.props.users.username,
-            about: this.props.users.about,
-            profile_picture: this.props.users.profile_picture
+            username: this.props.users.data.attributes.username,
+            about: this.props.users.data.attributes.about,
+            profile_picture: this.props.users.data.attributes.profile_picture
         })
     }
 
@@ -36,7 +36,7 @@ class UserEdit extends Component {
     updateUser = (event) => {
         console.log(this.state)
         event.preventDefault();
-        let {username, password, about, picture_profile} = this.state
+        let {username, password, about, profile_picture} = this.state
         // this.props.updateUser(this.state)
 
         fetch('http://localhost:3001/api/v1/user/edit', {
@@ -50,7 +50,7 @@ class UserEdit extends Component {
                 username,
                 password,
                 about,
-                picture_profile
+                profile_picture
             })
         })
         .then(resp => resp.json())
@@ -60,9 +60,9 @@ class UserEdit extends Component {
                 title: 'Profile Updated',
                 text: `Your profile has been updated!`,
                 icon: 'success',
-                confirmButtonText: 'Go to Profile',
+                confirmButtonText: 'Time to check some movies out!',
             }).then(function() {
-                window.history.go(-1);
+                window.history.go(-2);
             })
         })
     }
