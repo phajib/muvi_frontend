@@ -65,7 +65,7 @@ export const logIn = (userInfo) => {
         })
       } else {
         dispatch({ type: 'CURRENT_USER', payload: data.user })
-        // dispatch(setCurrentUser(data.user))
+        // dispatch(setCurrentUser(data.users))
         localStorage.setItem("jwt", data.jwt)
       }
     })
@@ -98,8 +98,66 @@ export const checkUser = () => {
   }
 }
 
+export const fetchUserMovies = (user) => dispatch => {
+  fetch(`${HOST_URL}/usermovies`, {
+    headers: {
+      "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+      "User": user,
+    }
+  })
+  .then(resp => resp.json())
+  .then(userMovieList => {
+    dispatch({ type: 'USER_MOVIES', payload: userMovieList })
+    // localStorage.setItem("jwt", userMovieList.jwt)
+  })
+  .catch(err => console.log(err))
+}
+
+// getMovieLists = (user) => {
+//   let userAccount;
+//   user.id ? userAccount = user.id : userAccount = user.user.id
+
+//   fetch('http://localhost:3001/api/v1/usermovies', {
+//     headers: {
+//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+//       "User": userAccount
+//     }
+//   })
+//   .then(resp => resp.json())
+//   .then(movielists => {
+//     this.setState({userMovies: movielists})
+//   })
+// }
+
+// export const fetchUserMovies = (user) => {
+//   return (dispatch) => {
+//     fetch(`${HOST_URL}/usermovies`)
+//     .then(resp => resp.json())
+//     .then(response => {
+//       dispatch({ type: 'USER_MOVIES', payload: response.data })
+//     })
+//     .catch(err => console.log(err))
+//   }
+// }
+
+
 export const userUpdate = (updatedUser) => {
   return {type: "USER_UPDATED", payload: updatedUser}
+}
+
+export const userData = () => {
+  return (dispatch) => {
+      fetch(`${HOST_URL}/user/all_info`,{
+          headers: {
+              "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+          }
+      })
+      .then(resp => resp.json())
+      .then(data => {
+          dispatch({type: 'USER_MOVIES', payload: data.savedMovies})
+          // dispatch(userMovies(data.likedGames))
+      })
+  }
 }
 
 // export const updateUser = (updatedUser) => {
@@ -140,23 +198,8 @@ export const userUpdate = (updatedUser) => {
 //  }
 // }
 
-export const userData = () => {
-  return (dispatch) => {
-      fetch(`${HOST_URL}/user/all_info`,{
-          headers: {
-              "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-          }
-      })
-      .then(resp => resp.json())
-      .then(data => {
-          dispatch({type: 'USER_MOVIES', payload: data.savedMovies})
-          // dispatch(userMovies(data.likedGames))
-      })
-  }
-}
-
 // export const fetchUserPage = () => {
-//   fetch(`${HOST_URL}/user/${this.profileId}/info`)
+//   fetch(`${HOST_URL}/user/${id}/info`)
 //   .then(resp => resp.json())
 //   .then( data => {
 //     this.setState({
@@ -165,23 +208,4 @@ export const userData = () => {
 //       movieComments: data.comments
 //     })
 //   })
-// }
-
-// export const userMovies = (user) => dispatch => {
-//   axios.post(`${HOST_URL}/usermovies`)
-//     .then(response =>
-//       dispatch({ type: 'USER_MOVIES',payload: response.data })
-//     )
-//     .catch(err => console.log(err));
-// };
-
-// export const userMovies = (user) => {
-//   return (dispatch) => {
-//     fetch(`${HOST_URL}/usermovies`)
-//     .then(resp => resp.json())
-//     .then(response => {
-//       dispatch({ type: 'USER_MOVIES', payload: response.data })
-//     })
-//     .catch(err => console.log(err))
-//   }
 // }
