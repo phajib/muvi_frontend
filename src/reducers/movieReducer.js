@@ -7,7 +7,7 @@ const initialState = {
   topRatedMovies: [],
   popularMovies: [],
   latestMovies: [],
-  userMovies: []
+  // myMovies: []
 };
 
 export default function (state = initialState, action) {

@@ -30,13 +30,6 @@ export default function (state = [], action) {
             return action.payload
         case 'USER_UPDATED':
             return action.payload
-        case 'USER_MOVIES':
-            return action.payload
-        // case "USER_UPDATED":
-        //     return {
-        //         ...state,
-        //         user: action.payload
-        //     }
         default:
             return state;
     }
