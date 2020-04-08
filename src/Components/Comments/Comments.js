@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-const Comment = (props) => {
-    return (
-      <div className="Comment">
-        {props.mycomments ? <p className="commentMovieTitle">
-            {props.comment.movie_title}
-            <p className="commentContent">{props.comment.content}</p>
-        </p>
-         : props.comment.content}
+class Comments extends Component {
+    render() {
+        let {username, content, created_at, user_id, id} = this.props.commentObj
 
-        {props.user.id === props.comment.user_id ?
-            <i className="comDeleteButton window close outline icon"
-                onClick={() => props.deleteComment(props.comment)}>
-            </i>
-            : null}
-      </div>
-    )
-
+        return (
+            <div>
+                <div className="container">
+                    <h3 className="text-success">Your Comments</h3>
+                    <Link to={`/user/${user_id}`}>{username}</Link>
+                    <p className="text-success">{content}</p>
+                    <p className="text-success">Created On: {created_at.split('T')[0]}</p> */}
+                    {this.props.users.data.id === user_id &&
+                        <button className="btn btn-light" onClick={() => this.props.deleteComment(id)}>
+                            Delete Comment
+                        </button>
+                    }
+                </div>
+            </div>
+        )
+    }
 }
 
-export default Comment
+const mapStateToProps = state => {
+    return { users: state.users }
+}
+
+export default connect(mapStateToProps, null)(Comments)
