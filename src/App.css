@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+
+.poster-bg {
+  width: 100%;
+  height: 100vh;
+  /* margin-top: 10vh; */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* background-size: auto; */
+}
+
+.overview {
+  padding: 4vh 0 0 10vw;
+  width: 70vw;
+  font-size: 1.6vw;
+  text-shadow: 7px 8px 6px black;
+  text-align: justify;
+}
+
+.title {
+  font-size: 4.5vw;
+  text-align: left;
+  text-shadow: 7px 6px 8px black;
+}
+
+.muvi-info {
+  text-shadow: 3px 4px 3px black;
+  font-size: 1.3vw;
+  text-align: left;
+  width: 60vw;
+  padding: 5vh 0 0 5vw;
+  color: white;
+}
+
+.muvi-label {
+  text-shadow: 3px 4px 3px black;
+  font-size: 1.6vw;
+  text-align: left;
+}
