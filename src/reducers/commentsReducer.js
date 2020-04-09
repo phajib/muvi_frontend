@@ -1,8 +1,8 @@
-    const initialState = {
-        content: '',
-        movieComments: [],
-        loading: false,
-    };
+    // const initialState = {
+    //     content: '',
+    //     movieComments: [],
+    //     loading: false,
+    // };
 
 export default function (state = [], action) {
     switch (action.type) {

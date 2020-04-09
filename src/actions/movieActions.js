@@ -34,7 +34,7 @@ export const fetchMovie = id => dispatch => {
     })
     .catch(err => console.log(err));
   };
-  
+
 export const fetchUpcoming = () => {
   return (dispatch) => {
   fetch(`${HOST_URL}/upcoming`)
@@ -75,7 +75,7 @@ export const fetchLatest = () => {
   }
 }
 
-export const addToList = (movieObj, users) => dispatch => {
+export const saveMovie = (movieObj, users) => dispatch => {
   fetch(`${HOST_URL}/usermovies`, {
     method: 'POST',
     headers: {

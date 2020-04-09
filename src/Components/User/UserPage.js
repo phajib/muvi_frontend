@@ -20,7 +20,6 @@ class UserPage extends Component {
     componentDidMount(){
         // fetchUserPage()
         // fetch(`http://localhost:3001/api/v1/user/${this.props.users.id}/info`)
-        // fetch(`http://localhost:3001/api/v1/user/${this.props.users.data.id}/info`)
         // .then(resp => resp.json())
         // .then( data => {
         //     this.setState({

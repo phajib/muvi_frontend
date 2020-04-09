@@ -113,34 +113,6 @@ export const fetchUserMovies = (user) => dispatch => {
   .catch(err => console.log(err))
 }
 
-// getMovieLists = (user) => {
-//   let userAccount;
-//   user.id ? userAccount = user.id : userAccount = user.user.id
-
-//   fetch('http://localhost:3001/api/v1/usermovies', {
-//     headers: {
-//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
-//       "User": userAccount
-//     }
-//   })
-//   .then(resp => resp.json())
-//   .then(movielists => {
-//     this.setState({userMovies: movielists})
-//   })
-// }
-
-// export const fetchUserMovies = (user) => {
-//   return (dispatch) => {
-//     fetch(`${HOST_URL}/usermovies`)
-//     .then(resp => resp.json())
-//     .then(response => {
-//       dispatch({ type: 'USER_MOVIES', payload: response.data })
-//     })
-//     .catch(err => console.log(err))
-//   }
-// }
-
-
 export const userUpdate = (updatedUser) => {
   return {type: "USER_UPDATED", payload: updatedUser}
 }
@@ -155,57 +127,8 @@ export const userData = () => {
       .then(resp => resp.json())
       .then(data => {
           dispatch({type: 'USER_MOVIES', payload: data.savedMovies})
-          // dispatch(userMovies(data.likedGames))
       })
   }
 }
 
-// export const updateUser = (updatedUser) => {
-//   return (dispatch) => {
-//   fetch('http://localhost:3001/api/v1/user/edit', {
-//     method: "PATCH",
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Accept': 'application/json',
-//       "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-//     },
-//     body: JSON.stringify({
-//       user: {
-//         username: updatedUser.username,
-//         password: updatedUser.password,
-//         about: updatedUser.about,
-//         picture_profile: updatedUser.profile_picture
-//       }
-//     })
-//   })
-//   .then(resp => resp.json())
-//   .then(updatedProfile => {
-//     updateUser(updatedProfile)
-//     Swal.fire({
-//       title: 'Profile Updated',
-//       text: `Your profile has been updated!`,
-//       icon: 'success',
-//       confirmButtonText: 'Go to Profile',
-//     }).then(function () {
-//       window.history.back();
-//     })
-//   })
-//   .then(data => {
-//     dispatch({type: 'USER_UPDATED', payload: data.users})
-//     localStorage.setItem("jwt", data.jwt)
-//   })
-//   .catch(err => console.log(err))
-//  }
-// }
 
-// export const fetchUserPage = () => {
-//   fetch(`${HOST_URL}/user/${id}/info`)
-//   .then(resp => resp.json())
-//   .then( data => {
-//     this.setState({
-//       user: data.user_info,
-//       userMovies: data.userMovies,
-//       movieComments: data.comments
-//     })
-//   })
-// }
