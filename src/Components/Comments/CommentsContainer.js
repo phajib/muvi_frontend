@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 
-debugger
+// debugger
 class CommentsContainer extends Component {
     constructor() {
         super();
@@ -18,18 +18,19 @@ class CommentsContainer extends Component {
     }
 
     componentDidMount() {
-        fetch(`${HOST_URL}/comments/movie/${this.props.movie.id}`)
+        fetch(`${HOST_URL}/comments/movie/${this.props.showMovie.id}`)
             .then(resp => resp.json())
             .then(data => {
+                console.log(data)
                 data.message ? console.log('no comments') : this.setState({ muviComments : data.comments })
             })
     }
 
-    commentInput = (event) => {
+    onChange = (event) => {
         this.setState({ content: event.target.value })
     }
 
-    onSubmitComment = () => {
+    onSubmit = () => {
         console.log('trying to send new Comment', this.state.content)
         if (this.state.content === "") {
             // Swal.fire({
@@ -90,17 +91,20 @@ class CommentsContainer extends Component {
     render() {
         return (
             <div className="container bg-dark">
-                <h3 className="formLabel text-success"><strong>Comments</strong></h3>
+                <h3 className="text-success"><b>Comments</b></h3>
                 <div className="container">
                     COMMENTS HERE
-                    {/* {this.state.muviComments === 0 ?
+                    {this.state.muviComments === 0 ?
                         <h3 className="text-secondary">No Comments Yet</h3> //: <Comments />
                         : this.state.muviComments.map(comment => {
-                            return <Comments key={comment.id} commentObj={comment} deleteComment={this.deleteComment} />
+                            return <Comments key={comment.id}
+                                      commentObj={comment}
+                                      deleteComment={this.deleteComment}
+                                    />
                         })
-                    } */}
+                    }
                 </div>
-                <form id="NewCommentForm" className="ui form" onSubmit={() => {this.onSubmitComment()}}>
+                <form id="NewCommentForm" className="ui form" onSubmit={() => {this.onSubmit()}}>
                     <div className="form-group">
                         <textarea
                             className="form-control"
@@ -108,11 +112,11 @@ class CommentsContainer extends Component {
                             name="content"
                             form="NewCommentForm"
                             placeholder="Thoughts of the Movie"
-                            onChange={(event) => {this.commentInput(event)}}
+                            onChange={(event) => {this.onChange(event)}}
                             value={this.state.content} >
                         </textarea>
                     </div>
-                    <button className="btn btn-success" type="submit">Submit</button>
+                    <button className="btn btn-success btn-sm" type="submit">Submit</button>
                 </form>
             </div>
         )
