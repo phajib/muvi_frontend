@@ -6,6 +6,7 @@ class UserDetails extends Component {
     render() {
     let { username, about, profile_picture } = this.props.users.data.attributes
     // let { username, about, profile_picture } = this.props.users.data
+    // let { username, about, profile_picture } = this.props.users
     return (
         <div className="container">
             <div className="row animated fadeIn">
