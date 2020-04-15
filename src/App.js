@@ -19,7 +19,7 @@ import LatestMovies from './Components/Home/LatestMovies'
 
 import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest  } from './actions/movieActions'
 // eslint-disable-next-line
-import { checkUser, fetchUserMovies } from './actions//usersActions'
+import { checkUser } from './actions//usersActions'
 
 class App extends Component {
   componentDidMount() {
@@ -42,15 +42,14 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/movies" component={Landing} />
           <Route exact path="/movie/:id" component={Movie} />
-          {/* <Route exact path="/movie/:id" render={() => {
-            return <Movie users={this.state.users} />
-          }} /> */}
 
           {/* <Route exact path="/profile" component={UserPage} /> */}
           <Route exact path="/profile" render={() => {
+            // let userProfile = this.props.match.params.id
               return this.props.users.length === 0 ?
-              // <Redirect to="/login"/> : <UserPage />
-              <Redirect to="/login"/> : <UserPage users={this.props.users} userMovies={this.props.fetchUserMovies} />
+              <Redirect to="/login"/> : <UserPage users={this.props.users} />
+              // <Redirect to="/login"/> : <UserPage users={this.props.users} userMovies={this.props.fetchUserMovies} />
+              // <Redirect to="/login"/> : <UserPage userProfile={userProfile} />
            }}/>
            {/* <Route exact path="/profile/edit" component={UserEdit} /> */}
           <Route exact path="/profile/edit" render={() => {
@@ -83,7 +82,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchTopRated: () => {dispatch(fetchTopRated())},
     fetchLatest: () => {dispatch(fetchLatest())},
     checkUser: () => {dispatch(checkUser())},
-    fetchUserMovies: () => {dispatch(fetchUserMovies())},
+    // fetchUserMovies: () => {dispatch(fetchUserMovies())},
   }
 }
 

@@ -17,13 +17,13 @@ import '../../App.css'
 // debugger
 export class Movie extends Component {
 
-  constructor() {
-    super()
+  // constructor() {
+  //   super()
 
-    this.state = {
-      showMovie: {}
-    }
-  }
+  //   this.state = {
+  //     showMovie: {}
+  //   }
+  // }
 
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
@@ -40,36 +40,40 @@ export class Movie extends Component {
       },
       body: JSON.stringify({
         movie: movieObj,
-        user: this.props.user // user not getting carried through
+        // showMovie: movieObj,
+        user_id: this.props.user.data.id
       })
     })
-      .then(resp => resp.json())
-      .then(data => {
-        console.log(data)
-        if (data.title) {
-          this.setState(mov => {
-            return { userMovies: [...mov.userMovies, data] }
-          })
-        }
-        data.message ? (
-          Swal.fire({
-            icon: 'error',
-            title: 'Unable to Add',
-            text: `${data.message}`
-          })
-        ) : (
-            Swal.fire({
-              icon: 'success',
-              title: 'Added',
-              text: `${data.title} has been saved to your list.`
-            })
-          )
-      })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log(data)
+      // if (data.original_title) {
+      //   this.setState(mov => {
+      //     // return { userMovies: [...mov.userMovies, data] }
+      //     return { savedMovies: [...mov.userMovies, data] }
+      //   })
+      // }
+      // if (data.original_title) {
+      data.message ? (
+        Swal.fire({
+          icon: 'error',
+          title: 'Unable to Save',
+          text: `${data.message}`
+        })
+      ) : (
+         Swal.fire({
+          icon: 'success',
+          title: 'Added',
+          text: `${data.original_title} has been saved to your list.`
+        })
+      )
+    })
   }
 
   render() {
     const { loading, movie } = this.props; //destructuring
     const { genres, production_companies } = this.props.movie
+
     let movieBackdrop = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
 
     let movieInfo = (
@@ -94,30 +98,32 @@ export class Movie extends Component {
             <div className="row">
               <div className="col-md-8">
                 <ul className="list-group">
-                  <li className="list-group-item bg-white text-white">
+                  <li className="list-group-item bg-dark text-white">
                     <div className="col-md-12">
-                      <Button animated='vertical' onClick={() => { this.saveMovie(movie) }} to='/movies'>
+                      <Button animated='vertical' onClick={() => { this.saveMovie(movie) }}>
+                      {/* <Button animated='vertical' onClick={() =>  this.saveMovie(this.props.movieObj) } to='/movies'> */}
                         <Button.Content hidden>SAVE</Button.Content>
                         <Button.Content visible>
-                          <Button icon='heart' />
+                          <Icon name='heart' />
                         </Button.Content>
                       </Button>
 
                       <Button animated='vertical' href={'https://www.imdb.com/title/' + movie.imdb_id} target="_blank" rel="noopener noreferrer">
                         <Button.Content hidden>IMDB</Button.Content>
                         <Button.Content visible >
-                          <Button icon="imdb" />
+                          <Icon name="imdb" />
                         </Button.Content>
                       </Button>
 
                       <Button animated='vertical' href="/">
                         <Button.Content hidden>Search</Button.Content>
                         <Button.Content visible>
-                          <Button icon="search" />
+                          <Icon name="search" />
                         </Button.Content>
                       </Button>
                     </div>
-                    <CommentsContainer showMovie={this.props.movie} />
+                    {/* <CommentsContainer showMovie={this.props.showMovie} /> */}
+                    <CommentsContainer movieObj={this.props.movie} />
                   </li>
                 </ul>
               </div>
@@ -131,17 +137,16 @@ export class Movie extends Component {
       </div>
     );
 
-    console.log(this.props.movies)
-    console.log(this.state.userMovies)
     let content = loading ? <Spinner /> : movieInfo;
-    return <div>{content}</div>;
+    return <div className="bg-dark">{content}</div>;
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   loading: state.movies.loading,
   movie: state.movies.movie,
-  savedMovies: state.userMovies
+  savedMovies: state.userMovies,
+  user: state.users,
 });
 
 export default connect(mapStateToProps, { fetchMovie, setLoading })(Movie);

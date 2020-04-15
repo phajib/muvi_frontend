@@ -16,7 +16,7 @@ export class MovieCard extends Component {
           </Link>
           <div className="card-body bg-dark">
             <p className="card-text text-white">
-              <strong>{movie.title}</strong> - {movie.release_date}
+              <b>{movie.original_title}</b> - <i>{movie.release_date}</i>
             </p>
           </div>
         </div>
