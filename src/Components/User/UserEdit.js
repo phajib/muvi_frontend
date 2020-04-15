@@ -20,10 +20,11 @@ class UserEdit extends Component {
     }
 
     componentDidMount(){
+        let {username, about, profile_picture} = this.props.users.data.attributes
         this.setState({
-            username: this.props.users.data.attributes.username,
-            about: this.props.users.data.attributes.about,
-            profile_picture: this.props.users.data.attributes.profile_picture
+            username: username,
+            about: about,
+            profile_picture: profile_picture
         })
     }
 
