@@ -28,10 +28,9 @@ class Login extends Component {
                         </Header>
                         <Form size='large'>
                             <Segment stacked>
-                                <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
+                                <Form.Input name="username" icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} />
                                 <Form.Input
                                     name="password"
-                                    fluid
                                     icon='lock'
                                     iconPosition='left'
                                     placeholder='Password'
@@ -39,7 +38,7 @@ class Login extends Component {
                                     onChange={(event) => this.handleInputChange(event)}
                                 />
 
-                                <Button color='green' fluid size='large' onClick={(event) => { this.props.loggingIn(event, this.state) }}>
+                                <Button color='green' size='large' onClick={(event) => { this.props.loggingIn(event, this.state) }}>
                                     Login
                                 </Button>
                             </Segment>
