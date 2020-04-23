@@ -3,25 +3,34 @@ import Comments from '../Comments/Comments'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 class UserComments extends React.Component {
-    constructor(){
-        super()
+    // _isMounted = false;
 
-        this.state = {
-            userComments: []
-        }
-    }
+    // constructor(){
+    //     super()
 
-    componentDidMount(){
-        fetch(`${HOST_URL}/comments`, {
-            headers: {
-                "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-            }
-        })
-        .then(resp => resp.json())
-        .then(comms => {
-            this.setState({userComments: comms})
-        })
-    }
+    //     this.state = {
+    //         userComments: []
+    //     }
+    // }
+
+    // componentDidMount(){
+    //     // this._isMounted = true;
+    //     fetch(`${HOST_URL}/comments/user_comments`, {
+    //         headers: {
+    //             "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+    //         }
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(comms => {
+    //         // if(this._isMounted) {
+    //             this.setState({userComments: comms})
+    //         // }
+    //     })
+    // }
+
+    // componentWillMount() {
+    //     this._isMounted = false;
+    // }
 
     removeComment = (commId) => {
         fetch(`${HOST_URL}/comments/${commId}`, {
@@ -47,12 +56,16 @@ class UserComments extends React.Component {
     }
 
     render(){
+        // console.log(this.props.userComments)
         return (
-            <div className="container animated zoomIn"> 
-                <h1 className="text-success">Comments</h1>
-                <div className="container">
-                    {this.state.userComments.map(comment => {
-                        return <Comments key={comment.id} commentObj={comment} removeComment={this.removeComment} />
+            <div> 
+                <h1 className="text-success">Your Comments</h1>
+                <div className="row">
+                    {this.props.userComments.map(comment => {
+                        return (
+                            <div key={comment.id}>
+                                <Comments commentObj={comment} removeComment={this.removeComment} />
+                            </div> )
                     })}
                 </div>
             </div>
