@@ -9,13 +9,13 @@ import Spinner from '../layout/Spinner'
 import '../../App.css'
 
 export class Movie extends Component {
-  constructor() {
-    super()
+  // constructor() {
+  //   super()
 
-    this.state = {
-      showMovie: {}
-    }
-  }
+  //   this.state = {
+  //     showMovie: {}
+  //   }
+  // }
 
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
