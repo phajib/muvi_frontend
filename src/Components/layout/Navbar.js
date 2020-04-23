@@ -21,10 +21,12 @@ class Navbar extends Component {
 
             {!Array.isArray(this.props.users) ? (
               <Link className="navbar-brand nav-link text-white" to="/profile">
-                {/* {this.props.users.data.attributes.username}'s Profile */}
-                Profile
+                {/* Profile */}
+                {this.props.users.data.attributes.username}'s Profile
               </Link>
             ) : null}
+
+            
 
             <div className="collapse navbar-collapse" id="navbarText">
               <ul className="navbar-nav ml-auto text-light d-inline-block">
