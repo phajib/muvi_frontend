@@ -59,12 +59,12 @@ export default function (state = initialState, action) {
         latestMovies: action.payload,
         loading: false
       };
-    case 'USER_MOVIES':
-      return {
-        ...state,
-        userMovies: action.payload,
-        loading: false
-      };
+    // case 'USER_MOVIES':
+    //   return {
+    //     ...state,
+    //     userMovies: action.payload,
+    //     loading: false
+    //   };
     default:
       return state;
   }
