@@ -29,7 +29,7 @@ export const signUp = (userInfo) => {
     })
     .then(response => response.json())
     .then(data => {
-      dispatch({ type: 'CREATE_USER', payload: data.user })
+      dispatch({ type: 'CREATE_USER', payload: data })
       localStorage.setItem("jwt", data.jwt)
     })
     .catch(err => console.log(err));
@@ -98,20 +98,20 @@ export const checkUser = () => {
   }
 }
 
-export const fetchUserMovies = (user) => dispatch => {
-  fetch(`${HOST_URL}/usermovies`, {
-    headers: {
-      "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
-      "User": user,
-    }
-  })
-  .then(resp => resp.json())
-  .then(userMovieList => {
-    dispatch({ type: 'USER_MOVIES', payload: userMovieList })
-    // localStorage.setItem("jwt", userMovieList.jwt)
-  })
-  .catch(err => console.log(err))
-}
+// export const fetchUserMovies = (user) => dispatch => {
+//   fetch(`${HOST_URL}/usermovies`, {
+//     headers: {
+//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+//       "User": user,
+//     }
+//   })
+//   .then(resp => resp.json())
+//   .then(userMovieList => {
+//     dispatch({ type: 'USER_MOVIES', payload: userMovieList })
+//     // localStorage.setItem("jwt", userMovieList.jwt)
+//   })
+//   .catch(err => console.log(err))
+// }
 
 export const userUpdate = (updatedUser) => {
   return {type: "USER_UPDATED", payload: updatedUser}
@@ -128,7 +128,6 @@ export const userData = () => {
       .then(data => {
           dispatch({type: 'USER_MOVIES', payload: data.savedMovies})
       })
+      .catch(err => console.log(err))
   }
 }
-
-
