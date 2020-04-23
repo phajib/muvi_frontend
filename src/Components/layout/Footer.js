@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div className="animated slideInDown fixed-bottom">
+    <div className="animated slideInDown">
       <div className="row">
         <div className="col-md-12">
           <div className="footer p-2 mt-2 text-center bg-secondary text-light">
