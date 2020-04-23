@@ -5,7 +5,7 @@ export class MovieCard extends Component {
   render() {
     const { movie } = this.props;
     return (
-      <div className="col-md-3 center-block mb-5">
+      <div className="col-md-3 center-block mb-5 animated zoomIn">
         <div className="card border-0 rounded">
           <Link to={'/movie/' + movie.tmdb_id}>
             <img className="card-img-top"
