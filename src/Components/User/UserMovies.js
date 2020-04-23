@@ -2,30 +2,24 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { userData } from '../../actions/usersActions'
-// eslint-disable-next-line
-import MovieCard from '../Movie/MovieCard'
+
 import MovieSampleCard from '../Movie/MovieSampleCard'
 
-// debugger
 class UserMovies extends Component {
     componentDidMount() {
         this.props.userData()
     }
 
     render() {
-        console.log(this.props.userMovies)
         return (
-            <>
+            <div>
                 <h2 className="text-success">Your Movie List</h2>
-                <div className="row animated zoomIn">
-
-                    {this.props.userMovies.map(movie => {
-                        // return <MovieCard key={movie.id} movie={movie} users={this.props.users}/>
+                <div className="row">
+                    {this.props.savedMovies.map(movie => {
                         return <MovieSampleCard key={movie.id} movie={movie} />
                     })}
-
                 </div>
-            </>
+            </div>
         )
     }
 }
@@ -43,3 +37,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserMovies)
+// export default UserMovies
