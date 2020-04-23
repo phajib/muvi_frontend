@@ -12,19 +12,17 @@ export const fetchComments = (comment) => dispatch => {
             "Authorization": `Bearer ${localStorage.getItem('jwt')}`
         },
         body: JSON.stringify({
-            // comment: {
+            comment: {
                 movie: comment.movie,
                 content: comment.content,
                 movie_id: comment.movie_id,
                 title: comment.title
-            // }
+            }
         })
     })
     .then(resp => resp.json())
     .then(comment => {
-        // console.log(comment)
-        dispatch({type: 'FETCH_COMMENTS', payload: comment.data})
-
+        console.log(comment)
         if (comment.message === "Please log in") {
             Swal.fire({
                 title: 'Unable to make comment!',
@@ -33,6 +31,7 @@ export const fetchComments = (comment) => dispatch => {
                 confirmButtonText: 'Back'
             })
         } else {
+            dispatch({type: 'FETCH_COMMENTS', payload: comment.data})
             this.setState({
                 muviComments: [...this.state.muviComments, comment]
             })
@@ -40,22 +39,35 @@ export const fetchComments = (comment) => dispatch => {
     })
 }
 
-
+// export const fetchUserComments = (user) => dispatch => {
+//     fetch(`${HOST_URL}/comments`, {
+//       headers: {
+//         "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
+//         "User": user,
+//       }
+//     })
+//     .then(resp => resp.json())
+//     .then(comms => {
+//         this.setState({userComments: comms})
+//     })
+// }
 
 export const fetchMovieComments = (tmdb_id) => {
     return (dispatch) => {
         fetch(`${HOST_URL}/comments/movie/${tmdb_id}`)
         .then(res => res.json())
-        .then(response => {
-            console.log(response)
-            dispatch({ type: 'FETCH_MOVIE_COMMENTS', payload: response.data})
+        .then(data => {
+            console.log(data)
+            data.message ? console.log('no comments') :
+            dispatch({ type: 'FETCH_MOVIE_COMMENTS', payload: data.data})
         })
         .catch(err => console.log(err));
     }
 }
 
+
 export const deleteComment = (id) => dispatch => {
-    fetch(`http://localhost:3001/api/v1/comments/${id}`, {
+    fetch(`${HOST_URL}/comments/${id}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${localStorage.getItem('jwt')}`
