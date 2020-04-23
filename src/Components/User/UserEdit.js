@@ -73,18 +73,18 @@ class UserEdit extends Component {
             <div className='animated bounceIn'>
                 <Grid textAlign='center' style={{ height: '78vh' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 500 }}>
-                        <Icon name='address card' size='big' color='green' fluid icon='address card' />
+                        <Icon name='address card' size='big' color='green' icon='address card' />
                         <Header as='h2' color='green' textAlign='center'>
                             Edit your MUVI account
                         </Header>
                         <Form size='large'>
                             <Segment stacked>
-                                <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} value={this.state.username} />
-                                <Form.Input name="password" fluid icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={(event) => this.handleInputChange(event)} value={this.state.password} />
-                                <Form.Input name="about" fluid icon='book' iconPosition='left' placeholder='Something about you...' onChange={(event) => this.handleInputChange(event)} value={this.state.about} />
-                                <Form.Input name="profile_picture" fluid icon='globe' iconPosition='left' placeholder='Profile Picture wwww...' type='url' onChange={(event) => this.handleInputChange(event)} value={this.state.profile_picture} />
+                                <Form.Input name="username" icon='user' iconPosition='left' placeholder='Username' onChange={(event) => this.handleInputChange(event)} value={this.state.username} />
+                                <Form.Input name="password" icon='lock' iconPosition='left' placeholder='Password' type='password' onChange={(event) => this.handleInputChange(event)} value={this.state.password} />
+                                <Form.Input name="about" icon='book' iconPosition='left' placeholder='Something about you...' onChange={(event) => this.handleInputChange(event)} value={this.state.about} />
+                                <Form.Input name="profile_picture" icon='globe' iconPosition='left' placeholder='Profile Picture wwww...' type='url' onChange={(event) => this.handleInputChange(event)} value={this.state.profile_picture} />
 
-                                <Button color='green' fluid size='large' onClick={(event) => { this.updateUser(event, this.state) }}>
+                                <Button color='green' size='large' onClick={(event) => { this.updateUser(event, this.state) }}>
                                     Update
                                 </Button>
                                 <span>  Or  <Link to="/profile">
