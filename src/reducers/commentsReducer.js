@@ -1,6 +1,6 @@
     // const initialState = {
     //     content: '',
-    //     movieComments: [],
+    //     muviComments: [],
     //     loading: false,
     // };
 
