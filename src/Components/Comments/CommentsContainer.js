@@ -1,126 +1,134 @@
 import React, { Component } from 'react';
+import { Grid, Segment, Form, TextArea } from 'semantic-ui-react'
+import Swal from 'sweetalert2'
 
 import Comments from './Comments'
+import '../../App.css'
 
-import Swal from 'sweetalert2'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 
-// debugger
 class CommentsContainer extends Component {
-    constructor() {
-        super();
+  _isMounted = false;
 
-        this.state = {
-            muviComments: [],
-            content: ""
+  constructor() {
+    super();
+
+    this.state = {
+      muviComments: [],
+      content: ""
+    }
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    fetch(`${HOST_URL}/comments/movie/${this.props.movieObj.id}`)
+      .then(resp => resp.json())
+      .then(data => {
+        console.log(data)
+        if(this._isMounted) {
+          data.message ? console.log('no comments') : this.setState({ muviComments: data.comments })
         }
-    }
+      })
+  }
 
-    componentDidMount() {
-        fetch(`${HOST_URL}/comments/movie/${this.props.showMovie.id}`)
-            .then(resp => resp.json())
-            .then(data => {
-                console.log(data)
-                data.message ? console.log('no comments') : this.setState({ muviComments : data.comments })
-            })
-    }
+  componentWillMount(){
+    this._isMounted = false;
+  }
 
-    onChange = (event) => {
-        this.setState({ content: event.target.value })
-    }
+  onChange = (event) => {
+    this.setState({ content: event.target.value })
+  }
 
-    onSubmit = () => {
-        console.log('trying to send new Comment', this.state.content)
-        if (this.state.content === "") {
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: 'You forgot to type a comment!',
-            //     confirmButtonText: 'Type Comment'
-            // })
-            alert('This cannot be empty')
-        } else {
-            fetch(`${HOST_URL}/comments`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-                },
-                body: JSON.stringify({
-                    movie: this.props.movie,
-                    content: this.state.content,
-                    movie_id: this.props.showMovie.id,
-                    movie_title: this.props.showMovie.title  //maybe movie_title
-                })
-            })
-            .then(resp => resp.json())
-            .then(comment => {
-                if (comment.message === "Please log in") {
-                    Swal.fire({
-                        title: 'Unable to make comment!',
-                        text: `${comment.message}`,
-                        icon: 'error',
-                        confirmButtonText: 'Back'
-                    })
-                } else {
-                    this.setState({
-                        muviComments: [...this.state.muviComments, comment]
-                    })
-                }
-            })
-        }
-        this.setState({ content: "" }) //clear content
-    }
-
-    deleteComment = (id) => {
-        fetch(`${HOST_URL}/comments/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-            }
+  onSubmit = (event) => {
+    event.preventDefault();
+    console.log('Trying to post new Comment', this.state.content)
+    if (this.state.content === "") {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'You forgot to type a comment!',
+        confirmButtonText: 'Type Comment'
+      })
+    } else {
+      fetch(`${HOST_URL}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+        },
+        body: JSON.stringify({
+          movie: this.props.movieObj,
+          content: event.target.content.value,
         })
+      })
         .then(resp => resp.json())
-        .then(data => {
-            let commentsUpdated = [...this.state.muviComments].filter(comment => comment.id !== data.id)
-            this.setState({ muviComments: commentsUpdated })
+        .then(comment => {
+          if (comment.message === 'Please log in') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Unable to make comment!',
+              text: `${comment.message}`,
+              confirmButtonText: 'Back'
+            })
+          } else {
+            this.setState({
+              muviComments: [...this.state.muviComments, comment]
+            })
+            console.log(this.state.muviComments)
+          }
         })
     }
+    this.setState({ content: "" }) //clear content
+  }
 
-    render() {
-        return (
-            <div className="container bg-dark">
-                <h3 className="text-success"><b>Comments</b></h3>
-                <div className="container">
-                    COMMENTS HERE
-                    {this.state.muviComments === 0 ?
-                        <h3 className="text-secondary">No Comments Yet</h3> //: <Comments />
-                        : this.state.muviComments.map(comment => {
-                            return <Comments key={comment.id}
-                                      commentObj={comment}
-                                      deleteComment={this.deleteComment}
-                                    />
-                        })
-                    }
-                </div>
-                <form id="NewCommentForm" className="ui form" onSubmit={() => {this.onSubmit()}}>
-                    <div className="form-group">
-                        <textarea
-                            className="form-control"
-                            rows="3"
-                            name="content"
-                            form="NewCommentForm"
-                            placeholder="Thoughts of the Movie"
-                            onChange={(event) => {this.onChange(event)}}
-                            value={this.state.content} >
-                        </textarea>
-                    </div>
-                    <button className="btn btn-success btn-sm" type="submit">Submit</button>
-                </form>
-            </div>
-        )
-    }
+  deleteComment = (id) => {
+    fetch(`${HOST_URL}/comments/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        let commentsUpdated = [...this.state.muviComments].filter(comment => comment.id !== data.id)
+        this.setState({ muviComments: commentsUpdated })
+      })
+  }
+
+  render() {
+    console.log(this.state.muviComments)
+    return (
+      <>
+        <Grid container columns={2} divided relaxed stackable className="bg-dark">
+          <Grid.Column>
+            <Segment className="bg-dark">
+              <Form onSubmit={(event) => { this.onSubmit(event) }}>
+                <Form.Field control={TextArea} name="content" placeholder='Thoughts of the Movie' onChange={(event) => {this.onChange(event)}} value={this.state.content} />
+                <Form.Button type='submit' inverted color='green'>Submit</Form.Button>
+              </Form>
+            </Segment>
+          </Grid.Column>
+          <Grid.Column>
+            <Segment className="bg-dark">
+              <h3 className="text-success"><b>Comments</b></h3>
+              {this.state.muviComments.length === 0 ?
+                <h4 className="text-secondary">Be the first to comment about this movie!</h4> : (
+                  this.state.muviComments.map(comment => {
+                    return (
+                    <React.Fragment key={comment.id}>
+                      <Comments id={comment.id} commentObj={comment} deleteComment={this.deleteComment} users={this.props.users} />
+                    </React.Fragment> )
+                })
+              )}
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </>
+    )
+  }
 }
 
 export default CommentsContainer
