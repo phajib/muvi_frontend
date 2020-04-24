@@ -32,7 +32,7 @@ export class Movie extends Component {
       },
       body: JSON.stringify({
         movie: movieObj,
-        user_id: this.props.user.data.id
+        // user_id: this.props.user.data.id
       })
     })
       .then(resp => resp.json())
