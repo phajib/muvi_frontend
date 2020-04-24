@@ -5,20 +5,19 @@ import { Icon, Label } from 'semantic-ui-react'
 
 class Comments extends Component {
     render() {
-        let { movie_title, content, created_at, user_id, id, profile_picture, username } = this.props.commentObj
+        let { movie_title, content, created_at, user_id, id, username } = this.props.commentObj
 
         return (
             <div className="animated flipInX">
-                <Label image>
-                    {/* eslint-disable-next-line */}
-                    {this.props.users.data.id == user_id &&
-                        // <img src={this.props.users.data.attributes.profile_picture} alt='prof'/>}
-                        <img src={profile_picture} alt='prof'/>}
-                    {/* eslint-disable-next-line */}
-                    {this.props.users.data.id == user_id &&
-                        <Icon inverted color='green' size="small" name='close' onClick={() => this.props.deleteComment(id)} />}
+                <Label image className='bg-dark text-white'>
                     {username} - {movie_title} - <i>{content}  </i>
                     <small><Moment format="DD-MM-YYYY">{created_at}</Moment></small>
+                    {this.props.users.length === 0 ?
+                        this.props.users.id === user_id && console.log('You Must Log In')
+                    :
+                        //  eslint-disable-next-line
+                        this.props.users.data.id == user_id && <Icon inverted color='green' size="small" name='close' onClick={() => this.props.deleteComment(id)} />
+                    }
                 </Label>
             </div>
         )

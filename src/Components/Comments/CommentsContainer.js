@@ -66,7 +66,7 @@ class CommentsContainer extends Component {
       })
         .then(resp => resp.json())
         .then(comment => {
-          if (comment.message === 'Please log in') {
+          if (comment.message === 'You Must Log In') {
             Swal.fire({
               icon: 'error',
               title: 'Unable to make comment!',
@@ -99,7 +99,6 @@ class CommentsContainer extends Component {
   }
 
   render() {
-    console.log(this.state.muviComments)
     return (
       <>
         <Grid container columns={2} divided relaxed stackable className="bg-dark">
@@ -119,7 +118,7 @@ class CommentsContainer extends Component {
                   this.state.muviComments.map(comment => {
                     return (
                     <React.Fragment key={comment.id}>
-                      <Comments id={comment.id} commentObj={comment} deleteComment={this.deleteComment} users={this.props.users} />
+                      <Comments id={comment.id} commentObj={comment} deleteComment={this.deleteComment} />
                     </React.Fragment> )
                 })
               )}
