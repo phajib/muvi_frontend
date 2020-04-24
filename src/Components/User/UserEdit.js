@@ -35,7 +35,7 @@ class UserEdit extends Component {
     }
 
     updateUser = (event) => {
-        console.log(this.state)
+        // console.log(this.state)
         event.preventDefault();
         let {username, password, about, profile_picture} = this.state
         // this.props.updateUser(this.state)
@@ -62,8 +62,10 @@ class UserEdit extends Component {
                 text: `Your profile has been updated!`,
                 icon: 'success',
                 confirmButtonText: 'Time to check some movies out!',
-            }).then(function() {
-                window.history.go(-2);
+            })
+            .then(function() {
+                // window.history.go(-2);
+                window.location.reload(true);
             })
         })
     }
