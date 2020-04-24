@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { signOut } from './../../actions/usersActions'
 
 class Navbar extends Component {
-  render () {
+  render() {
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-light bg-secondary mb-5 sticky-top">
@@ -21,25 +21,20 @@ class Navbar extends Component {
 
             {!Array.isArray(this.props.users) ? (
               <Link className="navbar-brand nav-link text-white" to="/profile">
-                {/* Profile */}
-                {this.props.users.data.attributes.username}'s Profile
+                Profile
+                {/* {this.props.users.data.attributes.username}'s Profile */}
               </Link>
             ) : null}
-
-            
 
             <div className="collapse navbar-collapse" id="navbarText">
               <ul className="navbar-nav ml-auto text-light d-inline-block">
                 <li className="nav-item dropdown d-inline-block mr-4 animated jackInTheBox">
-                  {/* eslint-disable-next-line */}
-                  {/* <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> */}
-                    <Link className="nav-link dropdown-toggle navbar-brand text-white text-lg"
-                      data-toggle="dropdown"
-                      id="navbardrop"
-                      to="/movies">
+                  <Link className="nav-link dropdown-toggle navbar-brand text-white text-lg"
+                    data-toggle="dropdown"
+                    id="navbardrop"
+                    to="/movies">
                       Movies
-                    </Link>
-                  {/* </a> */}
+                  </Link>
                   <div className="dropdown-menu bg-secondary">
                     <Link className="dropdown-item navbar-brand text-white text-sm" to="/popular/1">
                       Popular Movies
@@ -56,32 +51,27 @@ class Navbar extends Component {
                   </div>
                 </li>
                 <li className="nav-item d-inline-block mr-4">
-                  {/* eslint-disable-next-line */}
-                  {/* <a className="nav-item"> */}
-                    <Link
+                  <Link
                     className=" nav-item navbar-brand text-white text-lg"
                     to="/about">
-                      About
-                    </Link>
-                  {/* </a> */}
+                    About
+                  </Link>
                 </li>
                 <li className="nav-item d-inline-block mr-4">
                   {!Array.isArray(this.props.users) ? (
-                    // eslint-disable-next-line 
-                    <Link 
+                    <Link
                       className="nav-link btn btn-outline-success text-white btn-lg"
                       to="/signout"
                       onClick={() => {
-                        this.props.signOut()}
-                      }
-                    >
+                        this.props.signOut()
+                      }} >
                       Log Out
                     </Link>
                   ) : (
-                    <Link className="btn btn-outline-success text-white btn-lg" to="/login">
+                      <Link className="btn btn-outline-success text-white btn-lg" to="/login">
                         Login
-                    </Link>
-                  )}
+                      </Link>
+                    )}
                 </li>
               </ul>
             </div>
@@ -92,7 +82,7 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   users: state.users
 })
 

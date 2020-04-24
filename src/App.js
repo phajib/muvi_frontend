@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.users
   }
