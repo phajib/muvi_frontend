@@ -7,7 +7,7 @@ import MovieSampleCard from '../Movie/MovieSampleCard'
 
 class UserMovies extends Component {
     componentDidMount() {
-        this.props.userData()
+        // this.props.userData()
     }
 
     render() {

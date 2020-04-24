@@ -46,7 +46,7 @@ class UserPage extends Component {
                         {/* <UserMovies /> */}
                     </div>
                     <div className="col-sm-6">
-                        <UserComments userComments={this.state.userComments} />
+                        <UserComments userComments={this.state.userComments} users={this.props.users}/>
                         {/* <UserComments /> */}
                     </div>
                 </div>

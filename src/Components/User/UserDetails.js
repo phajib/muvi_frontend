@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 
 class UserDetails extends Component {
     render() {
-
-    // let { username, about, profile_picture } = this.props.users.data.attributes
     let { username, about, profile_picture } = this.props.userObj
 
     return (
