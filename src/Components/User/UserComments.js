@@ -3,7 +3,7 @@ import Comments from '../Comments/Comments'
 
 let HOST_URL = "http://localhost:3001/api/v1"
 class UserComments extends React.Component {
-    _isMounted = false;
+    // _isMounted = false;
 
     constructor(){
         super()
@@ -14,7 +14,7 @@ class UserComments extends React.Component {
     }
 
     componentDidMount(){
-        this._isMounted = true;
+        // this._isMounted = true;
         fetch(`${HOST_URL}/comments/user_comments`, {
             headers: {
                 "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
@@ -22,15 +22,15 @@ class UserComments extends React.Component {
         })
         .then(resp => resp.json())
         .then(comms => {
-            if(this._isMounted) {
+            // if(this._isMounted) {
                 this.setState({userComments: comms})
-            }
+            // }
         })
     }
 
-    componentWillMount() {
-        this._isMounted = false;
-    }
+    // componentWillMount() {
+    //     this._isMounted = false;
+    // }
 
     deleteComment = (id) => {
         fetch(`${HOST_URL}/comments/${id}`, {

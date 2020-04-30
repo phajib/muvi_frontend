@@ -21,7 +21,7 @@ class LoginPage extends Component {
     }
 
     createUser = (event, userInfo) => {
-        event.preventDefault();
+        event.preventDefault(); // don't re-render
         this.props.userSignUp(userInfo)
     }
 

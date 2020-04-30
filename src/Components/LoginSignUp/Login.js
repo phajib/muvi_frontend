@@ -13,6 +13,7 @@ class Login extends Component {
 
     handleInputChange = (event) => {
         this.setState({
+            // changes in input w/ corresponding name, updates key in our state
             [event.target.name]: event.target.value
         })
     }

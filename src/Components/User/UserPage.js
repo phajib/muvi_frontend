@@ -55,14 +55,4 @@ class UserPage extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         users: state.users,
-//         // savedMovies: state.userMovies,
-//         // userComments: state.comments
-//     }
-// }
-
-// export default connect(mapStateToProps, null)(UserPage)
-
 export default UserPage

@@ -9,14 +9,6 @@ import Spinner from '../layout/Spinner'
 import '../../App.css'
 
 export class Movie extends Component {
-  // constructor() {
-  //   super()
-
-  //   this.state = {
-  //     showMovie: {}
-  //   }
-  // }
-
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
     this.props.setLoading();
@@ -118,7 +110,6 @@ export class Movie extends Component {
             <CommentsContainer movieObj={this.props.movie} />
           </Segment>
         </Segment.Group>
-        {/* <MovieComments movieComments={this.props.movieComments} deleteComment={this.props.deleteComment} classes="" mycomments={false} user={this.props.users} /> */}
       </div>
     );
 

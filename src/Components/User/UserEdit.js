@@ -26,6 +26,11 @@ class UserEdit extends Component {
             about: about,
             profile_picture: profile_picture
         })
+        // this.setState({
+        //     username: this.props.users.username,
+        //     about: this.props.users.about,
+        //     profile_picture: this.props.users.profile_picture,
+        // })
     }
 
     handleInputChange = (event) => {
@@ -35,10 +40,9 @@ class UserEdit extends Component {
     }
 
     updateUser = (event) => {
-        // console.log(this.state)
+        console.log(this.state)
         event.preventDefault();
         let {username, password, about, profile_picture} = this.state
-        // this.props.updateUser(this.state)
 
         fetch('http://localhost:3001/api/v1/user/edit', {
             method: "PATCH",

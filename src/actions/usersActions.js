@@ -33,7 +33,6 @@ export const signUp = (userInfo) => {
 }
 
 export const logIn = (userInfo) => {
-  // debugger
   return (dispatch) => {
     fetch(`${HOST_URL}/login`, {
       method: 'POST',
@@ -60,17 +59,12 @@ export const logIn = (userInfo) => {
         })
       } else {
         dispatch({ type: 'CURRENT_USER', payload: data.user })
-        // dispatch(setCurrentUser(data.users))
         localStorage.setItem("jwt", data.jwt)
       }
     })
     .catch(err => console.log(err))
   }
 }
-
-// export const setCurrentUser = (user) => {
-//   return {type: "CURRENT_USER", payload: user}
-// }
 
 export const signOut = () => {
   localStorage.removeItem('jwt')
@@ -92,21 +86,6 @@ export const checkUser = () => {
     }
   }
 }
-
-// export const fetchUserMovies = (user) => dispatch => {
-//   fetch(`${HOST_URL}/usermovies`, {
-//     headers: {
-//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`,
-//       "User": user,
-//     }
-//   })
-//   .then(resp => resp.json())
-//   .then(userMovieList => {
-//     dispatch({ type: 'USER_MOVIES', payload: userMovieList })
-//     // localStorage.setItem("jwt", userMovieList.jwt)
-//   })
-//   .catch(err => console.log(err))
-// }
 
 export const userUpdate = (updatedUser) => {
   return {type: "USER_UPDATED", payload: updatedUser}
