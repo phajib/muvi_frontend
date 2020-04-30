@@ -5,6 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter } from "react-router-dom";
+
+// Connects redux with react.
+// Anything wrapped w/ Provider allows access to redux store.
 import { Provider } from "react-redux";
 import store from './store'
 

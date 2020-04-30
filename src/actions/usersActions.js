@@ -1,12 +1,7 @@
 // import axios from 'axios';
 import Swal from 'sweetalert2'
 
-
 let HOST_URL = "http://localhost:3001/api/v1"
-
-// const CREATE_USER = 'CREATE_USER'
-// const CREATE_USER_ERROR = 'CREATE_USER_ERROR'
-// const CURRENT_USER = 'CURRENT_USER'
 
 //-----------USERS--------------------
 export const signUp = (userInfo) => {

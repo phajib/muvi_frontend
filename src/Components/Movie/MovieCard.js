@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// replaces <a> tag allowing more flexibility
 import { Link } from 'react-router-dom';
 import ReactImageFallback from 'react-image-fallback'
 import '../../App.css'

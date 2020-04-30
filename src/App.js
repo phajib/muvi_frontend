@@ -18,7 +18,6 @@ import PopularMovies from './Components/Home/PopularMovies'
 import LatestMovies from './Components/Home/LatestMovies'
 
 import { fetchTopRated, fetchUpcoming, fetchPopular, fetchLatest  } from './actions/movieActions'
-// eslint-disable-next-line
 import { checkUser } from './actions//usersActions'
 
 class App extends Component {
@@ -68,6 +67,7 @@ class App extends Component {
   }
 }
 
+// Dispatch new actions to the store
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchPopular: () => {dispatch(fetchPopular())},
@@ -78,6 +78,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+// Way of accessing values in the store as props.
 const mapStateToProps = (state) => {
   return {
     users: state.users

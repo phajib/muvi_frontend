@@ -10,9 +10,13 @@ export const setLoading = () => {
 };
 
 //-----------MOVIES--------------------
+// When something triggered in our app that will dispatch an action.
+// Dispatch is accessible via THUNK
+// Dispatch is from redux thunk middleware, implemented in the structure of store.
+// Dispatch action type and payload, which make the reducer recognize our action.
 export const searchMovie = text => dispatch => {
   dispatch({
-    type: 'SEARCH_MOVIE',
+    type: 'SEARCH_MOVIE', // type is checked in our movieReducer
     payload: text
   });
 };
@@ -20,7 +24,7 @@ export const searchMovie = text => dispatch => {
 export const fetchMovies = text => dispatch => {
   axios.get(`${HOST_URL}/search/${text}`)
     .then(response => {
-      dispatch({ type: 'FETCH_MOVIES', payload: response.data, })
+      dispatch({ type: 'FETCH_MOVIES', payload: response.data })  // payload is our response containing that data
     })
     .catch(err => console.log(err));
 };
@@ -30,6 +34,8 @@ export const fetchMovie = id => dispatch => {
   // fetch(`${HOST_URL}/movie/${id}`)
     // .then(res => res.json())
     .then(response => {
+      // go into the reducer & take this action object and
+      // update the redux store based on data being sent.
       dispatch({ type: 'FETCH_MOVIE', payload: response.data })
     })
     .catch(err => console.log(err));

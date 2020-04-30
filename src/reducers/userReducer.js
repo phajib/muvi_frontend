@@ -21,8 +21,6 @@ export default function (state = [], action) {
                     profile_picture: action.profile_picture
                 }
             }
-        case 'CREATE_USER_ERROR':
-            return { isLogin: false }
         case 'CURRENT_USER':
             return action.payload
             // return null

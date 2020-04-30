@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// In order to use a state inside a component when you have redux, use connect.
+// Connect your component with the states of the redux.
 import { connect } from 'react-redux';
 
 import {
@@ -9,13 +11,22 @@ import {
 } from '../../actions/movieActions';
 
 export class SearchForm extends Component {
-  // send text to state
-  onChange = e => {
-    this.props.searchMovie(e.target.value);
+
+  // Send text to state
+  // Take the value of the input & set this value & use it
+  // in our searchMovies action.
+  // In order to use this action or any action the Component
+  // defines this action as a props, for this Component.
+  // Whenever the value of the input changes, the state of text,
+  // will take the value of any input.
+  onChange = event => {
+    this.props.searchMovie(event.target.value);   // searchMovie action which takes a text parameter.
   };
 
-  onSubmit = e => {
-    e.preventDefault();
+  onSubmit = event => {
+    // preventDefault, cancels the event if it is cancelable, meaning that the 
+    // default action that belongs to the event will not occur. - w3schools
+    event.preventDefault();
     this.props.fetchMovies(this.props.text); // use action as props
     this.props.setLoading();
   };
@@ -45,9 +56,11 @@ export class SearchForm extends Component {
   }
 }
 
+// destructuring
 const mapStateToProps = state => ({
-  // pulled out text from the state
-  text: state.movies.text
+  // state, is our global state object that contains all the states in the application
+  // movies, contains reducers
+  text: state.movies.text   // pull out text from the state
 });
 
 export default connect(
