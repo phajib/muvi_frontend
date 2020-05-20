@@ -1,21 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, Icon, Segment, Grid } from 'semantic-ui-react'
+
+import { Button, Icon, Segment, Grid, Dropdown } from 'semantic-ui-react'
 import Swal from 'sweetalert2'
 
 import CommentsContainer from '../Comments/CommentsContainer'
-import { fetchMovie, setLoading } from '../../actions/movieActions'
+// eslint-disable-next-line
+import { fetchMovie, fetchRecommendations, setLoading } from '../../actions/movieActions'
 import Spinner from '../layout/Spinner'
 import '../../App.css'
+// eslint-disable-next-line
+import { Recommendations } from '../Home/Recommendations'
+import { HOST_URL, IMAGE_URL, MOVIE_IMAGE, BACKDROP_SIZE, IMDB_PATH, YOUTUBE_PATH } from '../../../src/config'
 
 export class Movie extends Component {
   componentDidMount() {
     this.props.fetchMovie(this.props.match.params.id);
+    // this.props.fetchRecommendations(this.props.match.params.id)
     this.props.setLoading();
   }
 
   saveMovie = (movieObj) => {
-    fetch(`http://localhost:3001/api/v1/usermovies`, {
+    fetch(`${HOST_URL}/usermovies`, {
       method: 'POST',
       headers: {
         "Content-Type": 'application/json',
@@ -48,67 +54,89 @@ export class Movie extends Component {
 
   render() {
     const { loading, movie } = this.props; //destructuring
-    const { genres, production_companies } = this.props.movie
+    const { genres, directors, production_companies, videos } = this.props.movie
 
-    let movieBackdrop = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+    let movieBackdrop = `${IMAGE_URL}/${BACKDROP_SIZE}${movie.backdrop_path}`
 
     let movieInfo = (
       <div className="bg-dark">
         <div className="poster-bg" style={{ backgroundImage: `url(${movieBackdrop})` }}>
-          <h1 className="title overview text-white" >{movie.title || movie.original_title}</h1>
-          <p className="overview text-white">{movie.overview}</p>
-          <i className="overview text-white">"{movie.tagline}"</i>
+          <div className="over">
+            <h1 className="title overview text-white" >{movie.title || movie.original_title}</h1>
+            <p className="overview text-white">{movie.overview}</p>
+            <i className="overview text-white"><b>{movie.tagline}</b></i>
+          </div>
         </div>
         <Segment.Group className="bg-dark">
-          <Grid columns={2}>
-            <Grid.Column>
-              <Segment basic className="bg-dark">
-                <img src={"https://image.tmdb.org/t/p/w185/" + movie.poster_path} className="thumbnail" alt="Poster" />
-              </Segment>
+          <Grid columns={2} className="muvi_content">
+            <Grid.Column className="muvi_content_thumb">
+              {/* <Segment basic> */}
+                <img src={`${IMAGE_URL}/${MOVIE_IMAGE}/` + movie.poster_path} className="thumbnail" alt="Poster" />
+              {/* </Segment> */}
             </Grid.Column>
+
             <Grid.Column>
-              <Segment basic className="bg-dark">
+              {/* <Segment basic> */}
                 <div className="col-md-8 muvi-info">
+                  {directors &&
+                    <p><b className="text-success">Director/s: </b>
+                      {directors.map(dir => directors.name).join(", ")}<br /><br />
+                    </p>
+                  }
+
+                  {production_companies && <p><b className="text-success">Production Companies</b><br></br><span className="">{production_companies.map(com => com.name).join(", ")}</span></p>}
+                  <b className="text-success">Released:</b> {movie.release_date} <br /><br />
+                  <b className="text-success">Average Rating:</b>
+                  <meter min="0" max="100" optimum="100" low="40" high="70" value={movie.vote_average * 10} />{movie.vote_average}<br /><br />
+                  <b className="text-success">Runtime:</b> {movie.runtime}mins
                   {genres &&
                     <p><b className="text-success">Genres: </b>
                       {genres.map(gen => gen.name).join(", ")}<br></br>
                     </p>
                   }
-                  {production_companies && <p><b className="text-success">Production Companies</b><br></br><span className="">{production_companies.map(com => com.name).join(", ")}</span></p>}
-                  <b className="text-success">Released:</b> {movie.release_date} <br></br>
-                  <b className="text-success">Average Rating:</b> {movie.vote_average} <br></br>
                 </div>
-              </Segment>
+              {/* </Segment> */}
             </Grid.Column>
           </Grid>
-        </Segment.Group>
 
-        <Segment.Group className="bg-dark">
-          <Segment basic className="bg-dark">
-            <Button.Group size='large' basic inverted color='green'>
-              <Button animated='vertical' onClick={() => { this.saveMovie(movie) }}>
-                <Button.Content hidden>SAVE</Button.Content>
-                <Button.Content visible>
-                  <Icon name='heart' />
-                </Button.Content>
-              </Button>
-              <Button animated='vertical' href={'https://www.imdb.com/title/' + movie.imdb_id} target="_blank" rel="noopener noreferrer">
-                <Button.Content hidden>IMDB</Button.Content>
-                <Button.Content visible >
-                  <Icon name="imdb" />
-                </Button.Content>
-              </Button>
-              <Button animated='vertical' href="/">
-                <Button.Content hidden>Search</Button.Content>
-                <Button.Content visible>
-                  <Icon name="search" />
-                </Button.Content>
-              </Button>
-            </Button.Group>
-          </Segment>
-          <Segment basic className="bg-dark">
-            <CommentsContainer movieObj={this.props.movie} />
-          </Segment>
+          <Button.Group size='large' basic inverted color='green'>
+            <Button animated='vertical' onClick={() => { this.saveMovie(movie) }}>
+              <Button.Content hidden>SAVE</Button.Content>
+              <Button.Content visible>
+                <Icon name='heart' />
+              </Button.Content>
+            </Button>
+            <Button animated='vertical' href={`${IMDB_PATH}` + movie.imdb_id} target="_blank" rel="noopener noreferrer">
+              <Button.Content hidden>IMDB</Button.Content>
+              <Button.Content visible >
+                <Icon name="imdb" />
+              </Button.Content>
+            </Button>
+            <Button animated='vertical' href="/">
+              <Button.Content hidden>Search</Button.Content>
+              <Button.Content visible>
+                <Icon name="search" />
+              </Button.Content>
+            </Button>
+            <Dropdown className='icon' icon='film' button simple options={
+              videos && videos.results.map(vid => {
+                return (
+                  <div className="bg-dark">
+                    <Button animated='vertical'
+                      href={`${YOUTUBE_PATH}` + vid.key}
+                      target='_blank'
+                      className="bg-dark"
+                      rel='noopener noreferrer' >
+                      <Button.Content hidden icon="film"><Icon name='film' /></Button.Content>
+                      <Button.Content visible><Icon name="play" /></Button.Content>
+                    </Button>
+                  </div>
+                )
+              })}
+            />
+          </Button.Group>
+          <br /><br />
+          <CommentsContainer movieObj={this.props.movie} />
         </Segment.Group>
       </div>
     );
@@ -121,8 +149,9 @@ export class Movie extends Component {
 const mapStateToProps = (state) => ({
   loading: state.movies.loading,
   movie: state.movies.movie,
+  recommendations: state.recommendations,
   savedMovies: state.userMovies,
   user: state.users,
 });
 
-export default connect(mapStateToProps, { fetchMovie, setLoading })(Movie);
+export default connect(mapStateToProps, { fetchMovie, fetchRecommendations, setLoading })(Movie);

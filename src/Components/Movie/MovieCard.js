@@ -5,6 +5,14 @@ import ReactImageFallback from 'react-image-fallback'
 import '../../App.css'
 
 export class MovieCard extends Component {
+  constructor(){
+    super()
+
+    this.state = {
+      a: 0
+    }
+  }
+
   render() {
     const { movie } = this.props;
 
@@ -23,12 +31,22 @@ export class MovieCard extends Component {
             className="card-img-top" />
           </Link>
 
-
           <div className="card-body bg-dark">
             <p className="card-text text-white">
               <b>{movie.original_title}</b> - <i>{movie.release_date}</i>
             </p>
           </div>
+          {/* Live Code Assessment task */}
+          {/* <div className="bg-dark">
+            <button className="btn btn-success" onClick={() => {
+              this.setState({
+                a: this.state.a + 1
+              })
+            }}>
+              <label>Like - {this.state.a}</label>
+            </button>
+          </div> */}
+          
         </div>
       </div>
     );
