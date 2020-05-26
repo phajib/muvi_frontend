@@ -1,8 +1,8 @@
 # MUVIf - Front End
 Muvi is where you can find information about movies.
 It's a IMDB/TMDB clone at a basic level. A user is able to create an account and are
-able to save favorite movies and you can leave comment/s. With or without, you are
-able to browse for Upcoming, Popular, Top Rated movies and search for movies.
+able to save favorite movies and you can leave comment/s. With or without an account,
+you are able to browse for Upcoming, Popular, Top Rated movies and search for movies.
 The movie data is from The Movie Data Base.
 
 ### This repository is the FRONTEND of MUVI.
