@@ -15,8 +15,8 @@ The movie data is from The Movie Data Base.
 - To get MUVI fully operational the [backend](https://github.com/phajib/muvi_api) needs to cloned.
 - Clone this frontend.
 - After both frontend and backend have been clone, run the backend.
-- In the 
-- The necessary packages need to be installed, enter ``` npm install ``` or ```npm i```.
+- The necessary packages need to be installed for the frontend to be operational.
+- Enter ```npm install``` or ```npm i```.
 - Run ```npm start```
 - Your browser should open Muvi, if not enter the ip address that was provided.
 
