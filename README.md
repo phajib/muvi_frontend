@@ -1,4 +1,4 @@
-# MUVIf - Front End
+# MUVI - FRONTEND
 Muvi is where you can find information about movies.
 It's a IMDB/TMDB clone at a basic level. A user is able to create an account and are
 able to save favorite movies and you can leave comment/s. With or without an account,
